@@ -87,17 +87,17 @@
 
 
 
-<meta name="description" content="Hexo部分安装1$ npm install -g hexo-cli 安装hexo后，在指定文件夹下建立博客目录(hexo init命令会自动执行npn install命令) 12$ hexo init &amp;lt;folder&amp;gt;$ cd &amp;lt;folder&amp;gt; 生成的目录结构如下： 12345678.├── _config.yml├── package.json├── scaffolds">
+<meta name="description" content="Hexo部分安装1$ npm install -g hexo-cli 安装hexo后，在指定文件夹下建立博客目录(hexo init命令会自动执行npn install命令) 12$ hexo init &amp;lt;folder&amp;gt;$ cd &amp;lt;folder&amp;gt;">
 <meta name="keywords">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo+github搭建博客">
 <meta property="og:url" content="http://yoursite.com/2017/04/10/hexo+github搭建博客/index.html">
 <meta property="og:site_name" content="Datou's blog">
-<meta property="og:description" content="Hexo部分安装1$ npm install -g hexo-cli 安装hexo后，在指定文件夹下建立博客目录(hexo init命令会自动执行npn install命令) 12$ hexo init &amp;lt;folder&amp;gt;$ cd &amp;lt;folder&amp;gt; 生成的目录结构如下： 12345678.├── _config.yml├── package.json├── scaffolds">
-<meta property="og:updated_time" content="2017-04-10T11:34:15.448Z">
+<meta property="og:description" content="Hexo部分安装1$ npm install -g hexo-cli 安装hexo后，在指定文件夹下建立博客目录(hexo init命令会自动执行npn install命令) 12$ hexo init &amp;lt;folder&amp;gt;$ cd &amp;lt;folder&amp;gt;">
+<meta property="og:updated_time" content="2017-04-10T11:57:22.341Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo+github搭建博客">
-<meta name="twitter:description" content="Hexo部分安装1$ npm install -g hexo-cli 安装hexo后，在指定文件夹下建立博客目录(hexo init命令会自动执行npn install命令) 12$ hexo init &amp;lt;folder&amp;gt;$ cd &amp;lt;folder&amp;gt; 生成的目录结构如下： 12345678.├── _config.yml├── package.json├── scaffolds">
+<meta name="twitter:description" content="Hexo部分安装1$ npm install -g hexo-cli 安装hexo后，在指定文件夹下建立博客目录(hexo init命令会自动执行npn install命令) 12$ hexo init &amp;lt;folder&amp;gt;$ cd &amp;lt;folder&amp;gt;">
 
 
 
@@ -106,7 +106,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -172,7 +172,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <p class="site-subtitle">敲代码，娶媳妇:)</p>
       
   </div>
 
@@ -253,9 +253,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/10/hexo+github搭建博客/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Datou">
+      <meta itemprop="name" content="大头">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -325,6 +325,7 @@
         <h2 id="Hexo部分"><a href="#Hexo部分" class="headerlink" title="Hexo部分"></a>Hexo部分</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli</div></pre></td></tr></table></figure>
 <p>安装hexo后，在指定文件夹下建立博客目录(hexo init命令会自动执行npn install命令)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo init &lt;folder&gt;</div><div class="line">$ cd &lt;folder&gt;</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>生成的目录结构如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── _config.yml</div><div class="line">├── package.json</div><div class="line">├── scaffolds</div><div class="line">├── source</div><div class="line">|   ├── _drafts</div><div class="line">|   └── _posts</div><div class="line">└── themes</div></pre></td></tr></table></figure>
 <h3 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h3><p>以<strong>hexo-theme-next</strong>主题为例，在博客根目录下执行：</p>
@@ -348,6 +349,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
 <p>修改配置文件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: https://github.com/yaeljiao/yaeljiao.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+<h3 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h3><h4 id="设置全文"><a href="#设置全文" class="headerlink" title="设置全文"></a>设置全文</h4><p>Hexo官方推荐在文章中添加<!-- more -->进行手动截断</p>
 
       
     </div>
@@ -452,9 +454,9 @@
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="Datou" />
-          <p class="site-author-name" itemprop="name">Datou</p>
+               src="/uploads/avatar.jpg"
+               alt="大头" />
+          <p class="site-author-name" itemprop="name">大头</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
           
@@ -480,6 +482,17 @@
 
         <div class="links-of-author motion-element">
           
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yaeljiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
         </div>
 
         
@@ -503,7 +516,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo部分"><span class="nav-number">1.</span> <span class="nav-text">Hexo部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主题"><span class="nav-number">1.2.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令"><span class="nav-number">1.3.</span> <span class="nav-text">指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#init"><span class="nav-number">1.3.1.</span> <span class="nav-text">init</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new"><span class="nav-number">1.3.2.</span> <span class="nav-text">new</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#generate"><span class="nav-number">1.3.3.</span> <span class="nav-text">generate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#server"><span class="nav-number">1.3.4.</span> <span class="nav-text">server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deploy"><span class="nav-number">1.3.5.</span> <span class="nav-text">deploy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clean"><span class="nav-number">1.3.6.</span> <span class="nav-text">clean</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署"><span class="nav-number">1.4.</span> <span class="nav-text">部署</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo部分"><span class="nav-number">1.</span> <span class="nav-text">Hexo部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主题"><span class="nav-number">1.2.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令"><span class="nav-number">1.3.</span> <span class="nav-text">指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#init"><span class="nav-number">1.3.1.</span> <span class="nav-text">init</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new"><span class="nav-number">1.3.2.</span> <span class="nav-text">new</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#generate"><span class="nav-number">1.3.3.</span> <span class="nav-text">generate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#server"><span class="nav-number">1.3.4.</span> <span class="nav-text">server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deploy"><span class="nav-number">1.3.5.</span> <span class="nav-text">deploy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clean"><span class="nav-number">1.3.6.</span> <span class="nav-text">clean</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署"><span class="nav-number">1.4.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他问题"><span class="nav-number">1.5.</span> <span class="nav-text">其他问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置全文"><span class="nav-number">1.5.1.</span> <span class="nav-text">设置全文</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -530,7 +543,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Datou</span>
+  <span class="author" itemprop="copyrightHolder">大头</span>
 </div>
 
 
