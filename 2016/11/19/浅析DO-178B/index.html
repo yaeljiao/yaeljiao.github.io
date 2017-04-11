@@ -1,0 +1,791 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="背景​    民航发展，适航先行。二战后，美国和苏联两超级大国均开始研制大型民用客机，代表机型如波音707, 图-154. 在经过了数十年的市场洗礼，目前民机市场已被波音和空客两家寡头所垄断，而鲜能见到苏联客机的踪影。追其根本原因，也正是民航业最为重要的因素：飞机的安全性是否能够得到保障。保证飞机安全性的背后，需要一整套完善的适航体系去建立和实施。美国FAA所建立起的严格的适航审定程序保证了波音客">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅析DO-178B">
+<meta property="og:url" content="http://yoursite.com/2016/11/19/浅析DO-178B/index.html">
+<meta property="og:site_name" content="Datou">
+<meta property="og:description" content="背景​    民航发展，适航先行。二战后，美国和苏联两超级大国均开始研制大型民用客机，代表机型如波音707, 图-154. 在经过了数十年的市场洗礼，目前民机市场已被波音和空客两家寡头所垄断，而鲜能见到苏联客机的踪影。追其根本原因，也正是民航业最为重要的因素：飞机的安全性是否能够得到保障。保证飞机安全性的背后，需要一整套完善的适航体系去建立和实施。美国FAA所建立起的严格的适航审定程序保证了波音客">
+<meta property="og:image" content="http://i1.piimg.com/567571/1a54886b1ee1f8ce.png">
+<meta property="og:image" content="http://i1.piimg.com/567571/8fbc5b4f7406be81.png">
+<meta property="og:image" content="http://i4.buimg.com/567571/b5c76497704c1e6e.png">
+<meta property="og:image" content="http://i1.piimg.com/567571/52b3f962860c6cac.png">
+<meta property="og:updated_time" content="2017-04-11T16:31:04.517Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅析DO-178B">
+<meta name="twitter:description" content="背景​    民航发展，适航先行。二战后，美国和苏联两超级大国均开始研制大型民用客机，代表机型如波音707, 图-154. 在经过了数十年的市场洗礼，目前民机市场已被波音和空客两家寡头所垄断，而鲜能见到苏联客机的踪影。追其根本原因，也正是民航业最为重要的因素：飞机的安全性是否能够得到保障。保证飞机安全性的背后，需要一整套完善的适航体系去建立和实施。美国FAA所建立起的严格的适航审定程序保证了波音客">
+<meta name="twitter:image" content="http://i1.piimg.com/567571/1a54886b1ee1f8ce.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/19/浅析DO-178B/"/>
+
+
+
+
+
+  <title> 浅析DO-178B | Datou </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datou</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">敲代码，娶媳妇:)</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/19/浅析DO-178B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="大头">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datou">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                浅析DO-178B
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-19T20:19:54+08:00">
+                2016-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>​    民航发展，适航先行。二战后，美国和苏联两超级大国均开始研制大型民用客机，代表机型如波音707, 图-154. 在经过了数十年的市场洗礼，目前民机市场已被波音和空客两家寡头所垄断，而鲜能见到苏联客机的踪影。追其根本原因，也正是民航业最为重要的因素：飞机的安全性是否能够得到保障。保证飞机安全性的背后，需要一整套完善的适航体系去建立和实施。美国FAA所建立起的严格的适航审定程序保证了波音客机的安全，而号称‘飞行棺材’的图-154，由于安全性的考虑，中国在2002年已停止使用。</p>
+<a id="more"></a>
+<h2 id="局方的适航规章"><a href="#局方的适航规章" class="headerlink" title="局方的适航规章"></a>局方的适航规章</h2><p>Regulatory documents 规范性文件</p>
+<ul>
+<li>Federal aviation regulation, 如FAR 23 通用航空，FAR 25 民用航空，FAR 27 直升机，FAR 29大型直升机</li>
+<li>Airworthness Directives ADs 适航指令，指的是如果在飞机的运营阶段出现了缺陷，那么就要在限定的时间内把缺陷解决掉</li>
+</ul>
+<p>Non regulatory documents 规范性文件</p>
+<ul>
+<li>Advisory circulars ACs 咨询通告</li>
+</ul>
+<h2 id="机载系统"><a href="#机载系统" class="headerlink" title="机载系统"></a>机载系统</h2><p>​    机载设备需要得到局方的审定合格，颁发相应的证件后方可投入使用。如下图所示，虚线以上为系统层面的开发：ARP 4761 针对该系统承担的功能进行安全性评估，分析该系统失效会对整机产生怎样的影响；APR 4754 进行系统架构设计，确定每个功能模块的System level（SW level 和 HW level均依据SYS level来确定）。</p>
+<p><img src="http://i1.piimg.com/567571/1a54886b1ee1f8ce.png" alt=""></p>
+<p>​    针对机载软件开发，FAA 咨询通告(advisory circular)  AC 20-115, Airborne Software Assurance 认证了采用DO-178来指导机载软件开发从而获得FAA对机载软件的适航审定。</p>
+<p>DO-178B是由RTCA/EUROCAE在92年联合颁布的一份针对机载设备的软件开发的指导性文件。</p>
+<ul>
+<li>DO-178B目的是，产生无错误的软件(produce error-free software)。但要注意，没有完美的软件，DO-178B只能尽可能的避免错误。</li>
+<li>DO-178B是流程导向(process-oriented)的指导性文件，而不是流程文件。</li>
+<li><p>DO-178B定义了SW level，定义了objective（目标数）。软件等级不同，需要满足的目标数也不同。</p>
+<p>​DO-178b的目录结构如下图所示，围绕机载软件的生命周期可分成三部分：(4)SW planning process, (5)SW development process, Integral process(软件验证，配置管理，质量保证)。Annex A 描述了每个阶段需要满足的目标objective。(2)和(10)是机载软件开发以外的内容。</p>
+</li>
+</ul>
+<p><img src="http://i1.piimg.com/567571/8fbc5b4f7406be81.png" alt=""></p>
+<h2 id="Ch2-系统层面考虑"><a href="#Ch2-系统层面考虑" class="headerlink" title="Ch2 系统层面考虑"></a>Ch2 系统层面考虑</h2><p>该章定义了五个软件等级，软件等级的不同，会影响到以下三点：</p>
+<ul>
+<li>满足的目标数不同 number of objectives（DO-178B定义了66个目标）</li>
+<li>配置管理力度(configuration control)不同，分为CC1和CC2</li>
+<li>独立性(independence)需求不同 。（独立性指，一个产物的作者和验证者不能是同一个人，比如需求的作者author和评审者reviewer不能是同一个人；代码的作者，评审者，测试者不能是同一个人）</li>
+</ul>
+<p>系统架构对软件等级的影响，例如：</p>
+<ul>
+<li>分区partition，分区度越高，软件等级就可以分的更细，软件等级更改的代价就越小。比如某level A function和level B function有很多数据交互，甚至内存都需要共用，那么level B function就可能需要改为level A。</li>
+<li>安全监控safety monitoring，这是一种设计模式。比如更改某个大型的level A function，设计成一个level A的监控软件加一个level B的 function。这种将function的安全等级降一级会大大减少我们的effort。</li>
+</ul>
+<h2 id="Ch3-软件生命周期"><a href="#Ch3-软件生命周期" class="headerlink" title="Ch3 软件生命周期"></a>Ch3 软件生命周期</h2><p>定义了软件生命周期过程：SW planning process， SW development process，integral process.</p>
+<h2 id="Ch4-软件计划过程：定义产品如何被开发"><a href="#Ch4-软件计划过程：定义产品如何被开发" class="headerlink" title="Ch4 软件计划过程：定义产品如何被开发"></a>Ch4 软件计划过程：定义产品如何被开发</h2><p>五大plan如下：</p>
+<ul>
+<li>PSAC (plan for software aspects of certification)</li>
+<li>SDP(Software Development Plan)</li>
+<li>SVP(Software Verification Plan)</li>
+<li>SCMP(Software Configuration Management Plan)</li>
+<li>SQAP(Software Quality Assurance Plan)</li>
+</ul>
+<p>注：对于一个新项目，一定要做PSAC。对于已有的项目，在此基础上进行版本升级，则需要做CIA(change impact analysis)来评估是否需要做PSAC.</p>
+<p>注：PSAC与SAS(software accomplishment summary)相对应，但PSAC在计划阶段，SAS在收尾阶段。</p>
+<p>注：SMCP, SQAP分别由CM组和QA组负责编写。</p>
+<h2 id="Ch5-软件开发过程：开发产品"><a href="#Ch5-软件开发过程：开发产品" class="headerlink" title="Ch5 软件开发过程：开发产品"></a>Ch5 软件开发过程：开发产品</h2><p>对于软件开发过程，DO-178b允许使用任何手段进行软件开发，只要满足指定的目标objectives即可。典型的软件开发过程如R-D-C-I(Requirement process, Design process, Code process, Integration process).但也存在先Code process再requirement process的软件开发过程。</p>
+<p>注：在软件计划过程已将软件开发计划(SDP)定义好，在软件开发过程就要严格的遵循，不能再做改动。</p>
+<h3 id="Requirements-process"><a href="#Requirements-process" class="headerlink" title="Requirements process"></a>Requirements process</h3><p>Derived requirement衍生需求<br>DO-178b开始，规定测试是基于需求的测试（requirement-based testing）（但是在178B之前并没有规定测试是基于需求，有可能是基于CODE进行测试）。在系统层面进行safety assessment 系统安全性评估都是基于需求的，也就是在系统层面保证了需求是没有问题的，因此design，coding，testing都基于需求来做。<br>但是并不是所有的SW requirement都是从system flow down来的， 也就是说并不是所有的SW requirement都经过了system 层面的 safety assessment，有一部分SW requirement是在开发阶段发现，sys requirement只是描述了一个general idea，但具体的实现细节需要通过设计另外的功能来support它。此时就会产生衍生需求，衍生需求是在软件层面提出来的，因此并没有进行system层面的safety assessment，所以它的安全性不可而知。对于这种情况的需求，都需要反馈到系统安全性评估过程。</p>
+<h3 id="Design-process"><a href="#Design-process" class="headerlink" title="Design process"></a>Design process</h3><h3 id="Coding-process-开发源代码并输出目标文件"><a href="#Coding-process-开发源代码并输出目标文件" class="headerlink" title="Coding process: 开发源代码并输出目标文件"></a>Coding process: 开发源代码并输出目标文件</h3><h2 id="综合过程：确保产品正确"><a href="#综合过程：确保产品正确" class="headerlink" title="综合过程：确保产品正确"></a>综合过程：确保产品正确</h2><p>综合过程(Integral process)并不是在development process之后去做，它(verification，CM，QA，cert)贯穿在整个开发过程当中同时进行。比如：</p>
+<ul>
+<li>需求开发完毕，需要找人审阅(review)，审阅的过程即软件验证过程</li>
+<li>代码开发完毕，需要找人审阅，审阅的过程即软件验证过程</li>
+<li>需求或代码开发完毕，需要放在某服务器上， 放在服务器上的过程即配置管理过程(CM process)</li>
+</ul>
+<h3 id="Ch6-软件验证过程"><a href="#Ch6-软件验证过程" class="headerlink" title="Ch6 软件验证过程"></a>Ch6 软件验证过程</h3><p>Verification有三种表现形式：Review, analysis, test.</p>
+<h4 id="Review-需要checklist"><a href="#Review-需要checklist" class="headerlink" title="Review: 需要checklist"></a><strong>Review: 需要checklist</strong></h4><h4 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a><strong>Analysis</strong></h4><p><strong>Requirement-based test coverage analysis: </strong>DO-178b规定所有的需求都必须有test去覆盖(cover)它。也就是每一条需求都必须有test case 能够trace到它。注：单个需求的具体实现可能很复杂，一个test可能不能完整的验证该需求，此时必须要有多个test去验证。该analysis包含两个内容：1. 是不是所有的需求都被test 追溯(trace)到；2. 是不是需求被完全验证（因为可能出现能够被test trace到，但是test只验证了需求的一部分功能的情况）</p>
+<p><strong>Structural coverage analysis: </strong>需求开发完了，code根据需求开发完了，test也根据需求开发完了（也即是说code和test都是基于需求去开发的）。test是在code上跑的，如果test完全的将需求cover到了，但是在code上跑的时候发现有的条件并没有meet到，<strong>说明**</strong>code<strong>**跟需求之间是不匹配的</strong>。</p>
+<p><strong>Traceability analysis: </strong>分析系统 – 软件需求 – code – test之间的trace关系是什么样</p>
+<p><strong>Regression analysis: </strong>有的项目不是新项目，而是老的项目继承下来，此时并不想让所有的test都再跑一边，只希望把项目更改的部分进行测试。但是项目更改的部分对test影响的范围有多大，就需要做Regression analysis来分析哪些test是需要重新跑。</p>
+<p><strong>C++ analysis: </strong>在DO-178b中对面向对象有很多的限制(在SDP中就会规定，有些OO技术是不能够使用的). C++ analysis就是来保证有一些OO，比如多继承，多态等等不会出现在code中，因为多重继承很难去跟踪(trace)。</p>
+<p><strong>Software change impact(CIA) analysis: </strong>对于所有的继承的项目，第一个分析就应该是CIA.在CIA中会涉及partition, safety等问题，最后进行加权比较，得出此次版本的改动是major change还是minor change。如果是major的更改，那就要产生一个PSAC；如果是minor，说明改动很小，可以直接沿用上一个PSAC。</p>
+<p><strong>Timing and Memory analysis: 包含在CIA中</strong></p>
+<h4 id="Test"><a href="#Test" class="headerlink" title="Test"></a><strong>Test</strong></h4><p>机载软件的测试有两个目的，其中一个目的是：证明软件满足需求(Demonstrate that the software satisfies its requirements).该目标通过编写脚本实现，test要基于需求去写（基于code去写test永远都查不出问题）。注：有些软件并不一定是黑盒，可能是个灰盒，需求写的并不是很好，写脚本时候还是得参考code里面的变量名字，但是写脚本的时候要完全的忘记code是怎么写的，应完全的按照需求去写。</p>
+<p><strong>Requirements-Based Test Case Selection</strong></p>
+<ul>
+<li>正常功能测试Normal Range Test Cases, 比如打开开关，灯泡能亮</li>
+<li>健壮性测试Robustness Test Cases, 对于非正常的输入，测试软件的响应。比如灯泡放在水里，灯泡是直接自动断电还是直接漏电。对于飞机来说，遇到极端情况，设备不应该直接罢工，而应能够告诉飞行员当前的功能不是正常的工作状态。</li>
+</ul>
+<p>注：此处DO-178B有一个漏洞，也是开发和测试争论最多的地方，DO-178b并没有说明开发人员写需求的时候，要写的很健壮。就会让测试人员很迷茫：需求写的不健壮，但测试需要测试健壮性。会导致V&amp;V不知如何进行健壮性测试。</p>
+<p><strong> **</strong>Test Coverage Analysis**</p>
+<ul>
+<li>Requirement Coverage Analysis</li>
+<li>Structural Coverage Analysis</li>
+</ul>
+<p>注：上述Analysis均在Verification后期去做，当上述Analysis完成，即意味Verification结束。</p>
+<p>结构覆盖性测试(Structural Coverage Analysis)分为以下三种：</p>
+<ul>
+<li>Statement Coverage (Levels A, B, C): 程序中的每个语句都要能够执行至少一次(Every <strong>statement</strong> in the program has been invoked at least once.)</li>
+<li>Decision Coverage (Levels A, B): 程序的入口 （main）和出口（不同的条件下出口不同）都必须要执行一次，程序中每一个decision的可能情况都必须至少执行一次。(Every point of entry and exit in the program has been invoked at least once and every <strong>decision</strong> in the program has taken on all possible outcomes at least once.)</li>
+<li>Modified Condition/Decision Coverage (Level A) (MCDC): Every point of entry and exit in the program has been invoked at least once; Every decision in the program has taken all possible outcomes at least once; Every <strong>condition</strong> in a decision in the program has taken all possible outcomes</li>
+</ul>
+<p>注：decision, 程序中每一个做判断的地方都是一个decision。比如if…else，switch case中，if(A)，那么对于A的true和false，程序应该都能执行到。</p>
+<p>注：对于level C，对于if(A)，程序只能执行A==true的情况，那么是允许的，因为满足了Statement Coverage，即使没有满足Decision Coverage</p>
+<p>注：condition，if(A&amp;&amp;B),A是一个condition，B是一个condition，A&amp;&amp;B就组成了一个decision；也就是A的true和false两种情况都必须能够执行到</p>
+<p><strong>Structural Coverage Analysis Resolution: </strong>如发现了结构覆盖性漏洞，应该怎么做</p>
+<ul>
+<li>Inadequate test cases/procedures 首先看test是否有问题</li>
+<li>Inadequate requirements 看需求</li>
+<li>Dead code 是否是死代码，有些开发人员实现 了以后才要实现的功能，但是当前load并不需要。V&amp;V发现了死代码后，要提JIRA要求将dead code删掉或注释掉</li>
+<li>Deactivated code 是否是非激活代码（在当前的机型或者引擎，不论是什么配置下，都不会被执行的代码）。航空业的许多技术是迭代发展的，比如波音很多机型的代码沿用了以前的机型，比如787沿用了777，但是777上实现的某功能，不想在787上实现，因此当787沿用777代码的时候，这部分代码就成了非激活代码</li>
+</ul>
+<p>注：非激活码和死代码的区别，非激活代码在某个版本中是有需求对应，而死代码没有需求对应</p>
+<h3 id="Ch7-软件配置管理过程"><a href="#Ch7-软件配置管理过程" class="headerlink" title="Ch7 软件配置管理过程"></a>Ch7 软件配置管理过程</h3><p>SCM软件配置管理过程将会一直在机载设备的服役期间持续的进行。比如当即在设备出现了严重事故，会有NTSB进行数据的查阅，甚至要把相关人员带去调查。</p>
+<p>软件配置管理过程包含以下的活动：<br>Configuration identification 有唯一的ID能够识别<br>Baselines and traceability 有些数据需要打基线<br>Problem reporting, tracking and corrective action<br>Change control and review<br>Configuration status accounting<br>Archive, retrieval and release<br>Software load control<br>Software life cycle environment control</p>
+<p>对于数据项的配置管理的力度，分成两种CC1, CC2。CC1，所有的activity都需要满足；CC2, 都没有change review（即修改后不需要有人review）。对于数据项需要满足何种控制力度，是在PSAC第7章 life cycle data中定义。</p>
+<h3 id="Ch8-软件质量保证过程"><a href="#Ch8-软件质量保证过程" class="headerlink" title="Ch8 软件质量保证过程"></a>Ch8 软件质量保证过程</h3><p>SW Quality Assurance process 确保软件开发符合开始制订的计划(五大plan, PSAC, SDP, SVP, SCMP, SQAP)和标准(SW Requirement Standard, SW Design Standard, SW Coding Standard)。QA工程师贯穿于整个软件生命周期，确保软件生命周期的产物满足178b的目标。</p>
+<p>对于SW Quality Assurance Process，其独立性要求最高，LEVEL A-D的软件都需要满足独立性，如Table A-9所示。</p>
+<h3 id="Ch9-适航联动-局方和申请人的桥梁"><a href="#Ch9-适航联动-局方和申请人的桥梁" class="headerlink" title="Ch9 适航联动 局方和申请人的桥梁"></a>Ch9 适航联动 局方和申请人的桥梁</h3><p>适航联动(Certification Liaison Process)建立起局方和申请人沟通的桥梁。</p>
+<p>TSO件可以在多个机型通用，是霍尼去做认证</p>
+<p>TC件只能跟着机型去认证，MRO去做认证</p>
+<h3 id="Ch12-额外考虑"><a href="#Ch12-额外考虑" class="headerlink" title="Ch12  额外考虑"></a>Ch12  额外考虑</h3><p>工具鉴定(Tool Qualification), 如果某工具，1. 能够减少，消除，自动化执行软件生命周期中的一些过程. 2. 该工具的输出没有经过Verification process。满足以上两点，则该工具需要进行工具鉴定。</p>
+<p>如果工具的输出被验证，比如MBD（模型）自动生成的代码会被人工review，那么工具不需要鉴定</p>
+<p>如果工具出现的错误，<strong>如果这个错误会进入到代码中，</strong>那么就需要进行开发工具鉴定；如果这个错误不会引入到代码中（比如测试的不全），那么就需要进行验证工具鉴定。</p>
+<p>由于对开发工具的鉴定会很麻烦，有一个取巧的方法，针对开发工具A自动生成的代码，开发出另外的一套验证工具B对A自动生成的代码进行验证。此时，因为A tool生成的代码会被B tool review，因此A不需要进行工具鉴定；但B需要进行验证工具鉴定。由于验证工具鉴定比开发工具鉴定容易些，因此这种方法很取巧。</p>
+<h3 id="Annex-A-十张附表-66个目标"><a href="#Annex-A-十张附表-66个目标" class="headerlink" title="Annex A 十张附表 66个目标"></a>Annex A 十张附表 66个目标</h3><p><img src="http://i4.buimg.com/567571/b5c76497704c1e6e.png" alt=""></p>
+<p>Des: 描述该目标是什么，如上图，可执行目标码需要满足low level requirement<br>Ref: 是具体要怎样实施改目标（当我们在看Des时候看不懂说的是什么时，就需要通过Ref去看详细说明）<br>Applicability: 1. 圈说明当前目标使用于该软件等级，2. 实心代表独立性要求<br>Des: 针对于这个objective会有什么样的产物；通过output来检验SW满足的该objective<br>Ref: 在看Des时候看不懂说的是什么，就需要通过Ref去看详细的了解<br>CC: 产物(output)按照软件等级要进行不同程度的控制力度；D空表明该目标不适用与level D</p>
+<p><img src="http://i1.piimg.com/567571/52b3f962860c6cac.png" alt=""></p>
+<p>Level A需要满足所有的66个目标，其中25个目标要满足独立性需求<br>分析：软件从level E变成C最大的变化是，目标增加很多0到57，独立性没有很大变化，因此更多关注是满足目标；软件从level B变成A最大的变化是，目标增加很少，独立性很大变化，因此B到A更多关注是独立性<br>总结：高级别软件更关注独立性，低级别软件更关注满足目标</p>
+<p>注：独立性，一个产物的作者和验证者不能是同一个<strong>人</strong>，比如一个需求的作者和评审者不能是同一个人；代码的作者，评审者和测试者不能是同一个人。某些公司对独立性会有额外的要求，比如写需球和写代码的人不能是同一个人（这个在178b中并没有要求）。注意此处强调的是<strong>人</strong>，如果作者和验证者是同一个组织架构下的，比如都是开发组的，则是没有问题的。178B只是强调人不同即可。</p>
+<p>注：针对QA，其所有的目标都必须是独立的。这也是为什么QA是独立于开发，测试的角色。因为QA是贯穿整个生命周期的角色，如果让一个开发者去充当了QA，那么在开发者在到了自己的开发工作时，还需要找其他的人进行QA工作。因为针对于QA，其所有的目标都必须的独立的。</p>
+<p>注：Level E不需要满足178b的目标</p>
+<h2 id="相关规章"><a href="#相关规章" class="headerlink" title="相关规章"></a>相关规章</h2><p>DO-248B, Final Report for Clarification of DO-178B “Software Considerations in Airborne Systems and Equipment Considerations,” October 12, 2001 对于178B的Q&amp;A</p>
+<p>FAA Order 8110.49, Software Approval Guidelines, Change 1, Sept. 28, 2011 对178b更详细的阐述，是用来指导局方如何按照178b进行机载软件审核</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/10/hexo+github搭建博客/" rel="next" title="hexo+github搭建博客">
+                <i class="fa fa-chevron-left"></i> hexo+github搭建博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/19/代码缩进：Tab转空格的设置/" rel="prev" title="代码缩进：Tab转空格的设置">
+                代码缩进：Tab转空格的设置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="大头" />
+          <p class="site-author-name" itemprop="name">大头</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yaeljiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#局方的适航规章"><span class="nav-number">2.</span> <span class="nav-text">局方的适航规章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机载系统"><span class="nav-number">3.</span> <span class="nav-text">机载系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ch2-系统层面考虑"><span class="nav-number">4.</span> <span class="nav-text">Ch2 系统层面考虑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ch3-软件生命周期"><span class="nav-number">5.</span> <span class="nav-text">Ch3 软件生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ch4-软件计划过程：定义产品如何被开发"><span class="nav-number">6.</span> <span class="nav-text">Ch4 软件计划过程：定义产品如何被开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ch5-软件开发过程：开发产品"><span class="nav-number">7.</span> <span class="nav-text">Ch5 软件开发过程：开发产品</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Requirements-process"><span class="nav-number">7.1.</span> <span class="nav-text">Requirements process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Design-process"><span class="nav-number">7.2.</span> <span class="nav-text">Design process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Coding-process-开发源代码并输出目标文件"><span class="nav-number">7.3.</span> <span class="nav-text">Coding process: 开发源代码并输出目标文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综合过程：确保产品正确"><span class="nav-number">8.</span> <span class="nav-text">综合过程：确保产品正确</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ch6-软件验证过程"><span class="nav-number">8.1.</span> <span class="nav-text">Ch6 软件验证过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Review-需要checklist"><span class="nav-number">8.1.1.</span> <span class="nav-text">Review: 需要checklist</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Analysis"><span class="nav-number">8.1.2.</span> <span class="nav-text">Analysis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Test"><span class="nav-number">8.1.3.</span> <span class="nav-text">Test</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ch7-软件配置管理过程"><span class="nav-number">8.2.</span> <span class="nav-text">Ch7 软件配置管理过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ch8-软件质量保证过程"><span class="nav-number">8.3.</span> <span class="nav-text">Ch8 软件质量保证过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ch9-适航联动-局方和申请人的桥梁"><span class="nav-number">8.4.</span> <span class="nav-text">Ch9 适航联动 局方和申请人的桥梁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ch12-额外考虑"><span class="nav-number">8.5.</span> <span class="nav-text">Ch12  额外考虑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Annex-A-十张附表-66个目标"><span class="nav-number">8.6.</span> <span class="nav-text">Annex A 十张附表 66个目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关规章"><span class="nav-number">9.</span> <span class="nav-text">相关规章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">大头</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
