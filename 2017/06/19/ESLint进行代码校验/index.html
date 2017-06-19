@@ -87,17 +87,19 @@
 
 
 
-<meta name="description" content="​    作为初学前端的小白对框架和库的概念经常傻傻分不清，比如React经常被和Angular和Vue.js同时提及，于是误以为React就是一个框架，然而React官网给出的官方定义是：  A JavaScript library for building user interfaces  ​    我对框架和库的理解是：框架提供给我们一套思维方式和代码模板，我们在此基础上进行编码，即框架调用">
+<meta name="description" content="​    JavaScript是一门动态的弱类型语言，在提供了灵活性的同时也会悄悄的埋下很多雷。由于js没有编译过程，因此js的代码错误往往需要在执行过程中进行调试。于是很自然的我们能够想到，能否有一个工具能够在编写js代码的时候就进行错误检查？ESLint即是一个JavaScript代码检测工具，由JavaScript高级程序设计的作者Nicholas C. Zakas 于2013年创建。概括来">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="框架(framework)和库(library)">
-<meta property="og:url" content="http://yoursite.com/2017/04/12/框架(framework)和库(library)/index.html">
+<meta property="og:title" content="ESLint进行代码校验">
+<meta property="og:url" content="http://yoursite.com/2017/06/19/ESLint进行代码校验/index.html">
 <meta property="og:site_name" content="Datou">
-<meta property="og:description" content="​    作为初学前端的小白对框架和库的概念经常傻傻分不清，比如React经常被和Angular和Vue.js同时提及，于是误以为React就是一个框架，然而React官网给出的官方定义是：  A JavaScript library for building user interfaces  ​    我对框架和库的理解是：框架提供给我们一套思维方式和代码模板，我们在此基础上进行编码，即框架调用">
-<meta property="og:updated_time" content="2017-04-11T17:03:45.696Z">
+<meta property="og:description" content="​    JavaScript是一门动态的弱类型语言，在提供了灵活性的同时也会悄悄的埋下很多雷。由于js没有编译过程，因此js的代码错误往往需要在执行过程中进行调试。于是很自然的我们能够想到，能否有一个工具能够在编写js代码的时候就进行错误检查？ESLint即是一个JavaScript代码检测工具，由JavaScript高级程序设计的作者Nicholas C. Zakas 于2013年创建。概括来">
+<meta property="og:image" content="http://oqrrqdi10.bkt.clouddn.com/17-6-19/73249873.jpg">
+<meta property="og:updated_time" content="2017-06-19T15:23:59.160Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="框架(framework)和库(library)">
-<meta name="twitter:description" content="​    作为初学前端的小白对框架和库的概念经常傻傻分不清，比如React经常被和Angular和Vue.js同时提及，于是误以为React就是一个框架，然而React官网给出的官方定义是：  A JavaScript library for building user interfaces  ​    我对框架和库的理解是：框架提供给我们一套思维方式和代码模板，我们在此基础上进行编码，即框架调用">
+<meta name="twitter:title" content="ESLint进行代码校验">
+<meta name="twitter:description" content="​    JavaScript是一门动态的弱类型语言，在提供了灵活性的同时也会悄悄的埋下很多雷。由于js没有编译过程，因此js的代码错误往往需要在执行过程中进行调试。于是很自然的我们能够想到，能否有一个工具能够在编写js代码的时候就进行错误检查？ESLint即是一个JavaScript代码检测工具，由JavaScript高级程序设计的作者Nicholas C. Zakas 于2013年创建。概括来">
+<meta name="twitter:image" content="http://oqrrqdi10.bkt.clouddn.com/17-6-19/73249873.jpg">
 
 
 
@@ -125,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/12/框架(framework)和库(library)/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/06/19/ESLint进行代码校验/"/>
 
 
 
 
 
-  <title> 框架(framework)和库(library) | Datou </title>
+  <title> ESLint进行代码校验 | Datou </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -260,7 +262,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/12/框架(framework)和库(library)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/19/ESLint进行代码校验/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="大头">
@@ -281,7 +283,7 @@
             
             
               
-                框架(framework)和库(library)
+                ESLint进行代码校验
               
             
           </h1>
@@ -296,8 +298,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-12T20:19:54+08:00">
-                2017-04-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-19T22:11:51+08:00">
+                2017-06-19
               </time>
             
 
@@ -306,28 +308,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -354,41 +334,17 @@
       
 
       
-        <p>​    作为初学前端的小白对框架和库的概念经常傻傻分不清，比如React经常被和Angular和Vue.js同时提及，于是误以为React就是一个框架，然而React官网给出的官方定义是：</p>
+        <p>​    JavaScript是一门动态的弱类型语言，在提供了灵活性的同时也会悄悄的埋下很多雷。由于js没有编译过程，因此js的代码错误往往需要在执行过程中进行调试。于是很自然的我们能够想到，能否有一个工具能够在编写js代码的时候就进行错误检查？ESLint即是一个JavaScript代码检测工具，由JavaScript高级程序设计的作者Nicholas C. Zakas 于2013年创建。概括来说它可以完成两件事情：1. JavaScript语法检查，2. 编码风格检查。</p>
 <blockquote>
-<p>A JavaScript library for building user interfaces</p>
+<p>强/弱类型指的是类型检查的严格程度，比如弱类型的JavaScript在执行<code>&quot;1&quot;+2</code>时并不会报错，而是得到<code>&quot;12&quot;</code></p>
 </blockquote>
-<p>​    我对框架和库的理解是：框架提供给我们一套思维方式和代码模板，我们在此基础上进行编码，即框架调用我 。库提供给我们一些编程利器，方便我们进行编程，即我调用框架</p>
 <a id="more"></a>
-<p>​    常用的库有：</p>
-<ul>
-<li><p>jQuery - DOM 操作 / Ajax</p>
-</li>
-<li><p>Underscore / Lodash - 数据操作</p>
-</li>
-<li><p>RequireJS - 资源加载</p>
-</li>
-<li><p>React - 基于虚拟 DOM 的视图库</p>
-</li>
-<li><p>MomentJS - 时间处理</p>
-</li>
-<li><p>Normalize.css - 让各浏览器的默认样式相同</p>
-</li>
-<li><p>Velocity.js - 强大的动画库</p>
-</li>
-<li><p>D3.js - 可塑性强的数据图表库</p>
-</li>
-<li><p>echats.js - 即开即用的图表库</p>
-<p>​</p>
-<p>常用的框架有：</p>
-</li>
-<li><p>Backbone.js - 简洁的 MVC 框架</p>
-</li>
-<li><p>Vue.js - 简洁的 MVVM 框架</p>
-</li>
-<li><p>Angular - 强大的 MVVM 框架</p>
-</li>
-</ul>
+<h2 id="使用airbnb配置文件"><a href="#使用airbnb配置文件" class="headerlink" title="使用airbnb配置文件"></a>使用airbnb配置文件</h2><p>​    Airbnb的JavaScript代码编写风格在Github上广受欢迎，我们可以在项目中引入<a href="https://www.npmjs.com/package/eslint-config-airbnb" target="_blank" rel="external">eslint-config-airbnb</a>模块来使用airbnb的.eslintrc配置文件，除了ESLint规则以外，还囊括了ECMAScript 6+和React。使用前需要全局安装以下的npm包<code>eslint</code>, <code>eslint-plugin-import</code>, <code>eslint-plugin-react</code>, 和 <code>eslint-plugin-jsx-a11y</code>。</p>
+<p>​    注：在编写文本时（2017.06.19）eslint-config-airbnb还未支持ESLint v4，因此需要使用低版本的<code>eslint</code>，安装命令如<code>npm install --save-dev eslint @3.*</code></p>
+<p>​    在.eslintrc中添加如下命令即可使用：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"extends"</span>: <span class="string">"airbnb"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="ESLint结合Webstorm"><a href="#ESLint结合Webstorm" class="headerlink" title="ESLint结合Webstorm"></a>ESLint结合Webstorm</h2><p>​    Webstorm是一个强大的前端开发IDE，ESLint的集成也不在话下，只需要全局安装eslint，并导入指定的.eslintrc配置文件即可。</p>
+<p><img src="http://oqrrqdi10.bkt.clouddn.com/17-6-19/73249873.jpg" alt=""></p>
 
       
     </div>
@@ -425,18 +381,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/11/Webpack之“多页面开发”配置/" rel="next" title="Webpack之“多页面开发”配置">
-                <i class="fa fa-chevron-left"></i> Webpack之“多页面开发”配置
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/10/hexo+github搭建博客/" rel="prev" title="hexo+github搭建博客">
-                hexo+github搭建博客 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/06/11/Webpack之“多页面开发”配置/" rel="prev" title="Webpack之“多页面开发”配置">
+                Webpack之“多页面开发”配置 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -484,8 +436,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.jpg"
@@ -549,6 +510,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用airbnb配置文件"><span class="nav-number">1.</span> <span class="nav-text">使用airbnb配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ESLint结合Webstorm"><span class="nav-number">2.</span> <span class="nav-text">ESLint结合Webstorm</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
