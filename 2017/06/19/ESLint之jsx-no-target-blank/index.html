@@ -87,19 +87,17 @@
 
 
 
-<meta name="description" content="​    JavaScript是一门动态的弱类型语言，在提供了灵活性的同时也会悄悄的埋下很多雷。由于js没有编译过程，因此js的代码错误往往需要在执行过程中进行调试。于是很自然的我们能够想到，能否有一个工具能够在编写js代码的时候就进行错误检查？ESLint即是一个JavaScript代码检测工具，由JavaScript高级程序设计的作者Nicholas C. Zakas 于2013年创建。概括来">
+<meta name="description" content="​    ESLint的确是个好东西，在使用airbnb的JavaScript语法校验工具时，如下的&amp;lt;a&amp;gt;链接标签报出了安全错误： 1&amp;lt;a className=&quot;link&quot; href=&quot;http://www.honeywell.com/terms-conditions&quot; target=&quot;_blank&quot; &amp;gt;Terms &amp;amp; Conditions&amp;lt;/a&amp;gt; ​">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ESLint进行代码校验">
-<meta property="og:url" content="http://yoursite.com/2017/06/19/ESLint进行代码校验/index.html">
+<meta property="og:title" content="ESLint之jsx-no-target-blank">
+<meta property="og:url" content="http://yoursite.com/2017/06/19/ESLint之jsx-no-target-blank/index.html">
 <meta property="og:site_name" content="Datou">
-<meta property="og:description" content="​    JavaScript是一门动态的弱类型语言，在提供了灵活性的同时也会悄悄的埋下很多雷。由于js没有编译过程，因此js的代码错误往往需要在执行过程中进行调试。于是很自然的我们能够想到，能否有一个工具能够在编写js代码的时候就进行错误检查？ESLint即是一个JavaScript代码检测工具，由JavaScript高级程序设计的作者Nicholas C. Zakas 于2013年创建。概括来">
-<meta property="og:image" content="http://oqrrqdi10.bkt.clouddn.com/17-6-19/73249873.jpg">
-<meta property="og:updated_time" content="2017-06-19T15:23:59.160Z">
+<meta property="og:description" content="​    ESLint的确是个好东西，在使用airbnb的JavaScript语法校验工具时，如下的&amp;lt;a&amp;gt;链接标签报出了安全错误： 1&amp;lt;a className=&quot;link&quot; href=&quot;http://www.honeywell.com/terms-conditions&quot; target=&quot;_blank&quot; &amp;gt;Terms &amp;amp; Conditions&amp;lt;/a&amp;gt; ​">
+<meta property="og:updated_time" content="2017-06-19T16:23:24.449Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ESLint进行代码校验">
-<meta name="twitter:description" content="​    JavaScript是一门动态的弱类型语言，在提供了灵活性的同时也会悄悄的埋下很多雷。由于js没有编译过程，因此js的代码错误往往需要在执行过程中进行调试。于是很自然的我们能够想到，能否有一个工具能够在编写js代码的时候就进行错误检查？ESLint即是一个JavaScript代码检测工具，由JavaScript高级程序设计的作者Nicholas C. Zakas 于2013年创建。概括来">
-<meta name="twitter:image" content="http://oqrrqdi10.bkt.clouddn.com/17-6-19/73249873.jpg">
+<meta name="twitter:title" content="ESLint之jsx-no-target-blank">
+<meta name="twitter:description" content="​    ESLint的确是个好东西，在使用airbnb的JavaScript语法校验工具时，如下的&amp;lt;a&amp;gt;链接标签报出了安全错误： 1&amp;lt;a className=&quot;link&quot; href=&quot;http://www.honeywell.com/terms-conditions&quot; target=&quot;_blank&quot; &amp;gt;Terms &amp;amp; Conditions&amp;lt;/a&amp;gt; ​">
 
 
 
@@ -127,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/06/19/ESLint进行代码校验/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/06/19/ESLint之jsx-no-target-blank/"/>
 
 
 
 
 
-  <title> ESLint进行代码校验 | Datou </title>
+  <title> ESLint之jsx-no-target-blank | Datou </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -262,7 +260,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/19/ESLint进行代码校验/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/19/ESLint之jsx-no-target-blank/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="大头">
@@ -283,7 +281,7 @@
             
             
               
-                ESLint进行代码校验
+                ESLint之jsx-no-target-blank
               
             
           </h1>
@@ -334,17 +332,24 @@
       
 
       
-        <p>​    JavaScript是一门动态的弱类型语言，在提供了灵活性的同时也会悄悄的埋下很多雷。由于js没有编译过程，因此js的代码错误往往需要在执行过程中进行调试。于是很自然的我们能够想到，能否有一个工具能够在编写js代码的时候就进行错误检查？ESLint即是一个JavaScript代码检测工具，由JavaScript高级程序设计的作者Nicholas C. Zakas 于2013年创建。概括来说它可以完成两件事情：1. JavaScript语法检查，2. 编码风格检查。</p>
+        <p>​    ESLint的确是个好东西，在使用airbnb的JavaScript语法校验工具时，如下的<code>&lt;a&gt;</code>链接标签报出了安全错误：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a className=<span class="string">"link"</span> href=<span class="string">"http://www.honeywell.com/terms-conditions"</span> target=<span class="string">"_blank"</span> &gt;Terms &amp; Conditions&lt;<span class="regexp">/a&gt;</span></div></pre></td></tr></table></figure>
+<p>​    错误提示为Prevent usage of unsafe <code>target=&#39;_blank&#39;</code> (react/jsx-no-target-blank)，当我们希望使用<code>target=_blank</code>来打开一个新标签页时，一定要加上<code>rel=&#39;noreferrer noopener&#39;</code>，否则你的网页就会存在很严重的安全问题！！！</p>
+<a id="more"></a>
+<h2 id="危险的target-39-blank-39"><a href="#危险的target-39-blank-39" class="headerlink" title="危险的target=&#39;_blank&#39;"></a>危险的<code>target=&#39;_blank&#39;</code></h2><p>​    假设在浏览A页面时，通过<code>&lt;a target=&quot;_blank&quot; href=&quot;http://baidu.com/&quot;&gt;Click&lt;/a&gt;</code>标签链接到了B页面，那么在B页面中通过<code>window.reopner</code>即可获取A页面的<code>window</code>对象，这样的话即可拿到部分的A页面的控制权，即使B页面是跨域的也可以拿到该控制权！</p>
+<p>​    我们编写两个页面进行简单的测试，A页面（index.html）中有一个<code>&lt;a&gt;</code>标签，以及一个’待宰割‘的<code>&lt;div id=&#39;test&#39;&gt;&lt;/div&gt;</code>：</p>
 <blockquote>
 <p>强/弱类型指的是类型检查的严格程度，比如弱类型的JavaScript在执行<code>&quot;1&quot;+2</code>时并不会报错，而是得到<code>&quot;12&quot;</code></p>
 </blockquote>
-<a id="more"></a>
-<h2 id="使用airbnb配置文件"><a href="#使用airbnb配置文件" class="headerlink" title="使用airbnb配置文件"></a>使用airbnb配置文件</h2><p>​    Airbnb的JavaScript代码编写风格在Github上广受欢迎，我们可以在项目中引入<a href="https://www.npmjs.com/package/eslint-config-airbnb" target="_blank" rel="external">eslint-config-airbnb</a>模块来使用airbnb的.eslintrc配置文件，除了ESLint规则以外，还囊括了ECMAScript 6+和React。使用前需要全局安装以下的npm包<code>eslint</code>, <code>eslint-plugin-import</code>, <code>eslint-plugin-react</code>, 和 <code>eslint-plugin-jsx-a11y</code>。</p>
-<p>​    注：在编写文本时（2017.06.19）eslint-config-airbnb还未支持ESLint v4，因此需要使用低版本的<code>eslint</code>，安装命令如<code>npm install --save-dev eslint @3.*</code></p>
-<p>​    在.eslintrc中添加如下命令即可使用：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"extends"</span>: <span class="string">"airbnb"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="ESLint结合Webstorm"><a href="#ESLint结合Webstorm" class="headerlink" title="ESLint结合Webstorm"></a>ESLint结合Webstorm</h2><p>​    Webstorm是一个强大的前端开发IDE，ESLint的集成也不在话下，只需要全局安装eslint，并导入指定的.eslintrc配置文件即可。</p>
-<p><img src="http://oqrrqdi10.bkt.clouddn.com/17-6-19/73249873.jpg" alt=""></p>
+<!-- more -->
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"test"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"./test.html"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Click<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>​    B页面(test.html)中添加如下的js代码来试图篡改A页面：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    Test page</div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"application/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">      <span class="keyword">if</span> (<span class="built_in">window</span>.opener) &#123;</div><div class="line"><span class="comment">//      opener.location = 'http://baidu.com'</span></div><div class="line">        opener.document.getElementById(<span class="string">'test'</span>).innerHTML = <span class="string">'Now A page is revised!'</span>;</div><div class="line">      &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>​    测试结果显示A页面<code>&lt;div&gt;</code>标签被篡改了。该例子还只是简单的页面内容改动，但如果有人恶意的使用<code>opener.location</code>将A页面跳转到一个钓鱼网站，而此时用户的关注点还在B页面上，等用户返回’A页面’输入了隐私信息，那么后果不堪设想。</p>
+<h2 id="使用rel-noopener-noreferrer"><a href="#使用rel-noopener-noreferrer" class="headerlink" title="使用rel=noopener noreferrer"></a>使用<code>rel=noopener noreferrer</code></h2><p>​    给<code>&lt;a&gt;</code>标签添加<code>rel=noopener</code>可以使<code>window.opener</code>在Chrome 49 and Opera 36以上版本中为<code>null</code>。如果点击A页面上的链接跳转到了B页面，则称A页面为B页面的referrer（来源页面），通过referrer我们可以知道网站的流量从何而来。</p>
+<p>​    注：可以通过<code>document.referrer</code>拿到页面的来源</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://mathiasbynens.github.io/rel-noopener/" target="_blank" rel="external">https://mathiasbynens.github.io/rel-noopener/</a></p>
+<p><a href="https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md" target="_blank" rel="external">https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md</a></p>
 
       
     </div>
@@ -381,14 +386,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/06/19/ESLint进行代码校验/" rel="next" title="ESLint进行代码校验">
+                <i class="fa fa-chevron-left"></i> ESLint进行代码校验
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/06/19/ESLint之jsx-no-target-blank/" rel="prev" title="ESLint之jsx-no-target-blank">
-                ESLint之jsx-no-target-blank <i class="fa fa-chevron-right"></i>
+              <a href="/2017/06/11/Webpack之“多页面开发”配置/" rel="prev" title="Webpack之“多页面开发”配置">
+                Webpack之“多页面开发”配置 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -520,7 +529,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用airbnb配置文件"><span class="nav-number">1.</span> <span class="nav-text">使用airbnb配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ESLint结合Webstorm"><span class="nav-number">2.</span> <span class="nav-text">ESLint结合Webstorm</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#危险的target-39-blank-39"><span class="nav-number">1.</span> <span class="nav-text">危险的target='_blank'</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用rel-noopener-noreferrer"><span class="nav-number">2.</span> <span class="nav-text">使用rel=noopener noreferrer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
