@@ -257,7 +257,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/19/ESLint之jsx-no-target-blank/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/20/Node.js之NODE_ENV/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="大头">
@@ -279,8 +279,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/19/ESLint之jsx-no-target-blank/" itemprop="url">
-                  ESLint之jsx-no-target-blank
+                <a class="post-title-link" href="/2017/06/20/Node.js之NODE_ENV/" itemprop="url">
+                  Node.js之NODE_ENV
                 </a>
               
             
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-19T22:11:51+08:00">
-                2017-06-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T22:55:51+08:00">
+                2017-06-20
               </time>
             
 
@@ -333,12 +333,10 @@
 
       
         
-          <p>​    ESLint的确是个好东西，在使用airbnb的JavaScript语法校验工具时，如下的<code>&lt;a&gt;</code>链接标签报出了安全错误：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a className=<span class="string">"link"</span> href=<span class="string">"http://www.honeywell.com/terms-conditions"</span> target=<span class="string">"_blank"</span> &gt;Terms &amp; Conditions&lt;<span class="regexp">/a&gt;</span></div></pre></td></tr></table></figure>
-<p>​    错误提示为Prevent usage of unsafe <code>target=&#39;_blank&#39;</code> (react/jsx-no-target-blank)，当我们希望使用<code>target=_blank</code>来打开一个新标签页时，一定要加上<code>rel=&#39;noreferrer noopener&#39;</code>，否则你的网页就会存在很严重的安全问题！！！</p>
+          <p>​    在Node.js项目中<code>NODE_ENV</code>用来表明当前的工作环境（开发环境或生产环境），通过在代码里判断<code>NODE_ENV这</code>来对生产环境和开发环境做不同的处理，比如在开发环境中添加日志功能、mongodb数据库的操作等。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/19/ESLint之jsx-no-target-blank/#more" rel="contents">
+            <a class="btn" href="/2017/06/20/Node.js之NODE_ENV/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -467,6 +465,133 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/06/19/ESLint进行代码校验/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/19/ESLint之jsx-no-target-blank/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="大头">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datou">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/19/ESLint之jsx-no-target-blank/" itemprop="url">
+                  ESLint之jsx-no-target-blank
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-19T22:11:51+08:00">
+                2017-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>​    ESLint的确是个好东西，在使用airbnb的JavaScript语法校验工具时，如下的<code>&lt;a&gt;</code>链接标签报出了安全错误：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a className=<span class="string">"link"</span> href=<span class="string">"http://www.honeywell.com/terms-conditions"</span> target=<span class="string">"_blank"</span> &gt;Terms &amp; Conditions&lt;<span class="regexp">/a&gt;</span></div></pre></td></tr></table></figure>
+<p>​    错误提示为Prevent usage of unsafe <code>target=&#39;_blank&#39;</code> (react/jsx-no-target-blank)，当我们希望使用<code>target=_blank</code>来打开一个新标签页时，一定要加上<code>rel=&#39;noreferrer noopener&#39;</code>，否则你的网页就会存在很严重的安全问题！！！</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/19/ESLint之jsx-no-target-blank/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1596,7 +1721,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
