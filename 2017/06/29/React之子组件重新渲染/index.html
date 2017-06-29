@@ -87,19 +87,17 @@
 
 
 
-<meta name="description" content="​    JavaScript是一门动态的弱类型语言，在提供了灵活性的同时也会悄悄的埋下很多雷。由于js没有编译过程，因此js的代码错误往往需要在执行过程中进行调试。于是很自然的我们能够想到，能否有一个工具能够在编写js代码的时候就进行错误检查？ESLint即是一个JavaScript代码检测工具，由JavaScript高级程序设计的作者Nicholas C. Zakas 于2013年创建。概括来">
+<meta name="description" content="​    一直对React组件的生命周期理解的不够深刻，例如在React官网中，有这样一句话来描述shouldComponentUpdate()方法：  shouldComponentUpdate() is invoked before rendering when new props or state are being received.   ​    我对这句话的理解是：shouldComp">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ESLint进行代码校验">
-<meta property="og:url" content="http://yoursite.com/2017/06/19/ESLint进行代码校验/index.html">
+<meta property="og:title" content="React之子组件重新渲染">
+<meta property="og:url" content="http://yoursite.com/2017/06/29/React之子组件重新渲染/index.html">
 <meta property="og:site_name" content="Datou">
-<meta property="og:description" content="​    JavaScript是一门动态的弱类型语言，在提供了灵活性的同时也会悄悄的埋下很多雷。由于js没有编译过程，因此js的代码错误往往需要在执行过程中进行调试。于是很自然的我们能够想到，能否有一个工具能够在编写js代码的时候就进行错误检查？ESLint即是一个JavaScript代码检测工具，由JavaScript高级程序设计的作者Nicholas C. Zakas 于2013年创建。概括来">
-<meta property="og:image" content="http://oqrrqdi10.bkt.clouddn.com/17-6-19/73249873.jpg">
-<meta property="og:updated_time" content="2017-06-19T15:23:59.160Z">
+<meta property="og:description" content="​    一直对React组件的生命周期理解的不够深刻，例如在React官网中，有这样一句话来描述shouldComponentUpdate()方法：  shouldComponentUpdate() is invoked before rendering when new props or state are being received.   ​    我对这句话的理解是：shouldComp">
+<meta property="og:updated_time" content="2017-06-29T15:33:52.853Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ESLint进行代码校验">
-<meta name="twitter:description" content="​    JavaScript是一门动态的弱类型语言，在提供了灵活性的同时也会悄悄的埋下很多雷。由于js没有编译过程，因此js的代码错误往往需要在执行过程中进行调试。于是很自然的我们能够想到，能否有一个工具能够在编写js代码的时候就进行错误检查？ESLint即是一个JavaScript代码检测工具，由JavaScript高级程序设计的作者Nicholas C. Zakas 于2013年创建。概括来">
-<meta name="twitter:image" content="http://oqrrqdi10.bkt.clouddn.com/17-6-19/73249873.jpg">
+<meta name="twitter:title" content="React之子组件重新渲染">
+<meta name="twitter:description" content="​    一直对React组件的生命周期理解的不够深刻，例如在React官网中，有这样一句话来描述shouldComponentUpdate()方法：  shouldComponentUpdate() is invoked before rendering when new props or state are being received.   ​    我对这句话的理解是：shouldComp">
 
 
 
@@ -127,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/06/19/ESLint进行代码校验/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/06/29/React之子组件重新渲染/"/>
 
 
 
 
 
-  <title> ESLint进行代码校验 | Datou </title>
+  <title> React之子组件重新渲染 | Datou </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -262,7 +260,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/19/ESLint进行代码校验/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/29/React之子组件重新渲染/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="大头">
@@ -283,7 +281,7 @@
             
             
               
-                ESLint进行代码校验
+                React之子组件重新渲染
               
             
           </h1>
@@ -298,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-19T22:11:51+08:00">
-                2017-06-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-29T23:33:11+08:00">
+                2017-06-29
               </time>
             
 
@@ -334,17 +332,19 @@
       
 
       
-        <p>​    JavaScript是一门动态的弱类型语言，在提供了灵活性的同时也会悄悄的埋下很多雷。由于js没有编译过程，因此js的代码错误往往需要在执行过程中进行调试。于是很自然的我们能够想到，能否有一个工具能够在编写js代码的时候就进行错误检查？ESLint即是一个JavaScript代码检测工具，由JavaScript高级程序设计的作者Nicholas C. Zakas 于2013年创建。概括来说它可以完成两件事情：1. JavaScript语法检查，2. 编码风格检查。</p>
+        <p>​    一直对React组件的生命周期理解的不够深刻，例如在React官网中，有这样一句话来描述<code>shouldComponentUpdate()</code>方法：</p>
 <blockquote>
-<p>强/弱类型指的是类型检查的严格程度，比如弱类型的JavaScript在执行<code>&quot;1&quot;+2</code>时并不会报错，而是得到<code>&quot;12&quot;</code></p>
+<p><code>shouldComponentUpdate()</code> is invoked before rendering when new props or state are being received. </p>
 </blockquote>
+<p>​    我对这句话的理解是：<code>shouldComponentUpdate()</code>只有在<code>props</code>或<code>state</code>更新的时候才会被调用。于是很自然的，我一直默认这样一种场景：当父组件进行重新渲染(re-render)操作的时候，如果子组件的<code>props</code>或<code>state</code>没有改变，那么子组件就不会调用<code>shouldComponentUpdate()</code>，进而也不会调用<code>render()</code>方法。但是，事实是这样的吗？</p>
 <a id="more"></a>
-<h2 id="使用airbnb配置文件"><a href="#使用airbnb配置文件" class="headerlink" title="使用airbnb配置文件"></a>使用airbnb配置文件</h2><p>​    Airbnb的JavaScript代码编写风格在Github上广受欢迎，我们可以在项目中引入<a href="https://www.npmjs.com/package/eslint-config-airbnb" target="_blank" rel="external">eslint-config-airbnb</a>模块来使用airbnb的.eslintrc配置文件，除了ESLint规则以外，还囊括了ECMAScript 6+和React。使用前需要全局安装以下的npm包<code>eslint</code>, <code>eslint-plugin-import</code>, <code>eslint-plugin-react</code>, 和 <code>eslint-plugin-jsx-a11y</code>。</p>
-<p>​    注：在编写文本时（2017.06.19）eslint-config-airbnb还未支持ESLint v4，因此需要使用低版本的<code>eslint</code>，安装命令如<code>npm install --save-dev eslint @3.*</code></p>
-<p>​    在.eslintrc中添加如下命令即可使用：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"extends"</span>: <span class="string">"airbnb"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="ESLint结合Webstorm"><a href="#ESLint结合Webstorm" class="headerlink" title="ESLint结合Webstorm"></a>ESLint结合Webstorm</h2><p>​    Webstorm是一个强大的前端开发IDE，ESLint的集成也不在话下，只需要全局安装eslint，并导入指定的.eslintrc配置文件即可。</p>
-<p><img src="http://oqrrqdi10.bkt.clouddn.com/17-6-19/73249873.jpg" alt=""></p>
+<p>​    我们建立这样一个场景：父组件能够周期性的进行渲染，子组件接收父组件传递的一个<code>props</code>，但并不曾改变它，即验证该场景下<code>shouldComponentUpdate()</code>是否会被调用。父组件的<code>render()</code>方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">render() &#123;</div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &lt;h1&gt;Hello, world!&lt;/h1&gt;</div><div class="line">      &lt;h2&gt;It is &#123;this.state.date.toLocaleTimeString()&#125;.&lt;/h2&gt;</div><div class="line">      &lt;Child test=&#123;1&#125;/&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​    俗话说的好，talk is cheap, show me the code。使用<a href="https://codepen.io/yaeljiao/pen/NgyqeJ?editors=0011" target="_blank" rel="external">CodePen</a>来创建这样的一个场景。在子组件所有的生命周期函数中打上log，特别的在<code>shouldComponentUpdate()</code>中验证<code>nextProps</code>和<code>this.props</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">shouldComponentUpdate(nextProps, nextState) &#123;</div><div class="line">  console.log(nextProps.test === this.props.test);</div><div class="line">  console.log(&apos;shouldComponentUpdate&apos;);</div><div class="line">  return true;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​    结果大大出乎我的意料，<code>console.log(nextProps.test === this.props.test);</code>输出永远是<code>true</code>，但是控制台内不停地打印出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&quot;componentWillReceiveProps&quot;</div><div class="line">true</div><div class="line">&quot;shouldComponentUpdate&quot;</div><div class="line">&quot;componentWillUpdate&quot;</div><div class="line">&quot;render&quot;</div><div class="line">&quot;componentDidUpdate&quot;</div></pre></td></tr></table></figure>
+<p>​    子组件内并没有任何<code>props</code>或<code>state</code>的改变，但是子组件依然不停的进行re-render！这跟文章开头给出的React官网的引用好像背道而驰！对于该问题，本人还不能作出很好的回答，于是在<a href="https://stackoverflow.com/questions/44829272/why-react-still-re-render-a-child-component-even-if-the-props-and-states-for-a-c" target="_blank" rel="external">stackoverflow</a>上放出了问题，等待高人解答吧。但目前可以明确的一点是：<strong>当父组件进行重新渲染操作时，即使子组件的<code>props</code>或<code>state</code>没有做出任何改变，也会同样进行重新渲染。</strong></p>
 
       
     </div>
@@ -381,18 +381,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/20/Node.js之NODE_ENV/" rel="next" title="Node.js之NODE_ENV">
-                <i class="fa fa-chevron-left"></i> Node.js之NODE_ENV
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/06/19/ESLint之jsx-no-target-blank/" rel="prev" title="ESLint之jsx-no-target-blank">
-                ESLint之jsx-no-target-blank <i class="fa fa-chevron-right"></i>
+              <a href="/2017/06/20/Node.js之NODE_ENV/" rel="prev" title="Node.js之NODE_ENV">
+                Node.js之NODE_ENV <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -440,17 +436,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.jpg"
@@ -514,22 +501,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用airbnb配置文件"><span class="nav-number">1.</span> <span class="nav-text">使用airbnb配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ESLint结合Webstorm"><span class="nav-number">2.</span> <span class="nav-text">ESLint结合Webstorm</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
