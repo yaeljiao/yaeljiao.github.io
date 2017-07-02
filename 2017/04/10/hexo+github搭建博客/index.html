@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/10/hexo+github搭建博客/index.html">
 <meta property="og:site_name" content="Datou">
 <meta property="og:description" content="Hexo部分安装1$ npm install -g hexo-cli 安装hexo后，在指定文件夹下建立博客目录(hexo init命令会自动执行npn install命令)">
-<meta property="og:updated_time" content="2017-04-11T16:54:36.026Z">
+<meta property="og:updated_time" content="2017-07-02T03:46:08.574Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo+github搭建博客">
 <meta name="twitter:description" content="Hexo部分安装1$ npm install -g hexo-cli 安装hexo后，在指定文件夹下建立博客目录(hexo init命令会自动执行npn install命令)">
@@ -389,6 +389,14 @@
 <li><code>hide</code> - 在所有页面中都隐藏（可以手动展开）</li>
 <li><code>remove</code> - 完全移除</li>
 </ul>
+<h3 id="hexo图片的引用问题"><a href="#hexo图片的引用问题" class="headerlink" title="hexo图片的引用问题"></a>hexo图片的引用问题</h3><p>​    对于文章中的图片引用，我认为使用图床是最佳的方案，无奈公司内网屏蔽了一切跟网盘有关的网站，所以只能从本地引用静态资源了。之前的做法是在<code>_post</code>同级目录下创建一个<code>img</code>文件夹，在Markdown编辑器中以相对路径的方式引用是没有问题的。但是问题是，使用<code>hexo g</code>生成的时候，hexo并没有把<code>img</code>内的图片正常的路径转换。于是在网上找了找相关的解决办法，如下：</p>
+<ol>
+<li>确认<code>_config.yml</code> 下的<code>post_asset_folder:true</code>。这样每次<code>hexo new</code>新的文章时，hexo会自动建立一个与文章同名的文件见，所有的静态资源可以放在这个同名文件夹下。</li>
+<li>安装<a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="external">hexo-asset-image</a>插件，给图片自动提供一个绝对路径（该具体原理并没有深究）</li>
+</ol>
+<p>参考：</p>
+<p><a href="http://www.jianshu.com/p/c2ba9533088a" target="_blank" rel="external">hexo博客图片问题</a></p>
+<p><a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="external">hexo-asset-image</a></p>
 
       
     </div>
@@ -568,7 +576,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo部分"><span class="nav-number">1.</span> <span class="nav-text">Hexo部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主题"><span class="nav-number">1.2.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令"><span class="nav-number">1.3.</span> <span class="nav-text">指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#init"><span class="nav-number">1.3.1.</span> <span class="nav-text">init</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new"><span class="nav-number">1.3.2.</span> <span class="nav-text">new</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#generate"><span class="nav-number">1.3.3.</span> <span class="nav-text">generate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#server"><span class="nav-number">1.3.4.</span> <span class="nav-text">server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deploy"><span class="nav-number">1.3.5.</span> <span class="nav-text">deploy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clean"><span class="nav-number">1.3.6.</span> <span class="nav-text">clean</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署"><span class="nav-number">1.4.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他技巧"><span class="nav-number">1.5.</span> <span class="nav-text">其他技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置阅读全文"><span class="nav-number">1.5.1.</span> <span class="nav-text">设置阅读全文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#侧边栏"><span class="nav-number">1.5.2.</span> <span class="nav-text">侧边栏</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo部分"><span class="nav-number">1.</span> <span class="nav-text">Hexo部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主题"><span class="nav-number">1.2.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令"><span class="nav-number">1.3.</span> <span class="nav-text">指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#init"><span class="nav-number">1.3.1.</span> <span class="nav-text">init</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new"><span class="nav-number">1.3.2.</span> <span class="nav-text">new</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#generate"><span class="nav-number">1.3.3.</span> <span class="nav-text">generate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#server"><span class="nav-number">1.3.4.</span> <span class="nav-text">server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deploy"><span class="nav-number">1.3.5.</span> <span class="nav-text">deploy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clean"><span class="nav-number">1.3.6.</span> <span class="nav-text">clean</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署"><span class="nav-number">1.4.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他技巧"><span class="nav-number">1.5.</span> <span class="nav-text">其他技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置阅读全文"><span class="nav-number">1.5.1.</span> <span class="nav-text">设置阅读全文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#侧边栏"><span class="nav-number">1.5.2.</span> <span class="nav-text">侧边栏</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo图片的引用问题"><span class="nav-number">1.6.</span> <span class="nav-text">hexo图片的引用问题</span></a></li></ol></li></ol></div>
             
 
           </div>

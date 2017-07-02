@@ -94,12 +94,12 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/30/git之两个仓库的合并操作/index.html">
 <meta property="og:site_name" content="Datou">
 <meta property="og:description" content="​    有这样的一种场景，某个项目一直是在本地提交代码，有一天PM找到你说，所有的代码现在需要提交到远程仓库，进行统一的管理。于是我们就需要把一个已经提交N多次的本地仓库转移到一个新建立的远程仓库，并且所有提交历史还应该原封不动的被保存下来，以备今后进行问题追溯。下面记录处理方法。">
-<meta property="og:image" content="http://yoursite.com/2017/06/30/img/2017-06-30_115913.png">
-<meta property="og:updated_time" content="2017-06-30T04:07:22.588Z">
+<meta property="og:image" content="http://yoursite.com/2017/06/30/git之两个仓库的合并操作/2017-06-30_115913.png">
+<meta property="og:updated_time" content="2017-07-02T03:23:00.372Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git之两个仓库的合并操作">
 <meta name="twitter:description" content="​    有这样的一种场景，某个项目一直是在本地提交代码，有一天PM找到你说，所有的代码现在需要提交到远程仓库，进行统一的管理。于是我们就需要把一个已经提交N多次的本地仓库转移到一个新建立的远程仓库，并且所有提交历史还应该原封不动的被保存下来，以备今后进行问题追溯。下面记录处理方法。">
-<meta name="twitter:image" content="http://yoursite.com/2017/06/30/img/2017-06-30_115913.png">
+<meta name="twitter:image" content="http://yoursite.com/2017/06/30/git之两个仓库的合并操作/2017-06-30_115913.png">
 
 
 
@@ -371,7 +371,7 @@
 <p>​    5. 此时<code>git branch -a</code>可以看到project-a还在该仓库中，但我们已经不需要它了，<code>git remote remove</code>删除之：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git remote remove project-a</div></pre></td></tr></table></figure>
 <p>​    接下来都是常规操作了，如果有远程分支，将project-b的本地更新提交到远程即可<code>git push orgin master</code>。另：Webstorm集成了非常优秀的git可视化工具，可以直观的看到各个分支的情况，以下即表示了一个只有Initial commit的远程分支test如果将具有两次提交(ff和gitignore)的test_temp分支合并的过程：</p>
-<p><img src="../img/2017-06-30_115913.png" alt=""></p>
+<p><img src="/2017/06/30/git之两个仓库的合并操作/2017-06-30_115913.png" alt=""></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>​    合并两个仓库的根本原理是用到了<code>git remote</code>指令，将待merge的仓库project-b当作一个远程仓库去处理即可。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>stackoverflow: <a href="https://stackoverflow.com/questions/1425892/how-do-you-merge-two-git-repositories" target="_blank" rel="external">How do you merge two Git repositories?</a></p>
 
