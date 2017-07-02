@@ -1,0 +1,726 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="​    在项目的开发和生产这两个阶段，Webpack的配置是有差别的，主要体现在以下三个方面：  开发阶段有，但生产阶段没有的配置：比如eslint做js语法校验、devServer来配置webpack神奇的热模块替换(HMR, hot module replacement)功能 生产阶段有，但开发阶段没有的配置：比如UglifyJsPlugin做js代码压缩 开发和生产阶段皆有的配置，但配置方">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Webpack+React的生产阶段配置">
+<meta property="og:url" content="http://yoursite.com/2017/07/02/Webpack+React的生产阶段配置/index.html">
+<meta property="og:site_name" content="Datou">
+<meta property="og:description" content="​    在项目的开发和生产这两个阶段，Webpack的配置是有差别的，主要体现在以下三个方面：  开发阶段有，但生产阶段没有的配置：比如eslint做js语法校验、devServer来配置webpack神奇的热模块替换(HMR, hot module replacement)功能 生产阶段有，但开发阶段没有的配置：比如UglifyJsPlugin做js代码压缩 开发和生产阶段皆有的配置，但配置方">
+<meta property="og:updated_time" content="2017-07-02T16:29:08.729Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Webpack+React的生产阶段配置">
+<meta name="twitter:description" content="​    在项目的开发和生产这两个阶段，Webpack的配置是有差别的，主要体现在以下三个方面：  开发阶段有，但生产阶段没有的配置：比如eslint做js语法校验、devServer来配置webpack神奇的热模块替换(HMR, hot module replacement)功能 生产阶段有，但开发阶段没有的配置：比如UglifyJsPlugin做js代码压缩 开发和生产阶段皆有的配置，但配置方">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/02/Webpack+React的生产阶段配置/"/>
+
+
+
+
+
+  <title> Webpack+React的生产阶段配置 | Datou </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datou</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/02/Webpack+React的生产阶段配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="大头">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datou">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Webpack+React的生产阶段配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-02T22:48:11+08:00">
+                2017-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>​    在项目的开发和生产这两个阶段，Webpack的配置是有差别的，主要体现在以下三个方面：</p>
+<ol>
+<li>开发阶段有，但生产阶段没有的配置：比如<code>eslint</code>做js语法校验、<code>devServer</code>来配置webpack神奇的热模块替换(HMR, hot module replacement)功能</li>
+<li>生产阶段有，但开发阶段没有的配置：比如<code>UglifyJsPlugin</code>做js代码压缩</li>
+<li>开发和生产阶段皆有的配置，但配置方法不同：比如<code>output.publicPath</code>的配置、<code>source-map</code>来调试js代码等</li>
+</ol>
+<a id="more"></a>
+<h2 id="webpack相关配置"><a href="#webpack相关配置" class="headerlink" title="webpack相关配置"></a>webpack相关配置</h2><h3 id="移除不必要的插件"><a href="#移除不必要的插件" class="headerlink" title="移除不必要的插件"></a>移除不必要的插件</h3><p>​    拷贝一份开发阶段的配置文件<code>webpack.dev.config.js</code>到<code>webpack.production.config.js</code>中，我们基于此来进行二次的改造。首先要删去生产阶段不需要的配置：<code>devServer</code>, <code>HotModuleReplacementPlugin</code>, <code>NoErrorsPlugin</code>等。</p>
+<h3 id="配置output-publicPath"><a href="#配置output-publicPath" class="headerlink" title="配置output.publicPath"></a>配置<code>output.publicPath</code></h3><p>​    说到<code>output.publicPath</code>的配置，首先要讲到基于Epress框架的后端代码了：通过Epress唯一的中间件<code>express.static</code>我们可以配置引入静态资源的根路径，比如<code>app.use(express.static(path.join(__dirname, &#39;assets&#39;)));</code>。在基于Webpack的前端代码中，如果没有给<code>output.publicPath</code>做相关配置，则通过<code>HtmlWebpackPlugin</code>插件生成的html文件中，所有的资源引用都是相对的，比如：<code>&lt;script type=&quot;text/javascript&quot; src=&quot;build/main.js&quot;&gt;&lt;/script&gt;&lt;/body&gt;</code>，而<strong>相对路径是无法找到相关资源的</strong>。</p>
+<p>​    <code>output.publicPath</code>的作用是可以配置URL前缀，比如当我们使用了某cdn来引入静态资源，如<code>www.xxxcdn.com/</code>，则配置<code>output.publicPath: &#39;www.xxxcdn.com/&#39;</code>可以在通过<code>HtmlWebpackPlugin</code>生成的html文件中，将所有的资源以绝对路径的形式进行引用<code>&lt;script type=&quot;text/javascript&quot; src=&quot;www.xxxcdn.com/build/main.js&quot;&gt;&lt;/script&gt;&lt;/body&gt;</code>。而针对以上的Express后端引入静态资源的方式，当配置<code>output.publicPath</code>为<code>/</code>时候，通过<code>HtmlWebpackPlugin</code>生成的html文件中，所有的资源引用都是以<code>&lt;script type=&quot;text/javascript&quot; src=&quot;/build/main.js&quot;&gt;&lt;/script&gt;&lt;/body&gt;</code>形式引用的。</p>
+<h3 id="提取公共类库-打包公共代码"><a href="#提取公共类库-打包公共代码" class="headerlink" title="提取公共类库/打包公共代码"></a>提取公共类库/打包公共代码</h3><p>​    在基于Webpack构建的多页面应用中，每个页面配有唯一的入口文件，即使多个入口使用了相同的类库（比如jQuery），也会各自打包进自己的js文件中，这样无疑增加了额外的代码量。传统的前端项目并没有这样的问题，因为那个时候没有模块打包这样的过程，多个页面会引入公共的静态资源。Webpack的<code>CommonsChunkPlugin</code>可以分析出各个入口文件中引用的公共代码片段，然后将其提取出来，作为公共类库供各个入口文件使用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">	<span class="attr">name</span>: <span class="string">'commons'</span>, <span class="comment">// 这公共代码的 chunk 名为 'commons'</span></div><div class="line">	filename: <span class="string">'[name].bundle.js'</span>, <span class="comment">// 生成后的文件名 commons.bundle.js</span></div><div class="line">	minChunks: <span class="number">2</span> <span class="comment">// 设定要有4个页面均加载的js模块才会被纳入公共代码</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><strong><code>CommonsChunkPlugin</code>未解决的bug</strong></p>
+<p>​    当引入<code>CommonsChunkPlugin</code>插件后，<code>HtmlWebpackPlugin</code>并不会把提取出来的公共代码片段插入html模板中。目前我的做法是手动将公共资源添加到各个页面最终由<code>HtmlWebpackPlugin</code>生成好的html文件中，并且公共资源文件比如在入口文件之前引入，否则会报错！如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;body&gt;</div><div class="line">	&lt;div id=&quot;content&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;script type=&quot;text/javascript&quot; src=&quot;/commons.bundle.js&quot;&gt;&lt;/script&gt;</div><div class="line">	&lt;script type=&quot;text/javascript&quot; src=&quot;/build/main.js&quot;&gt;&lt;/script&gt;</div><div class="line">&lt;/body&gt;</div></pre></td></tr></table></figure>
+<h3 id="js代码压缩"><a href="#js代码压缩" class="headerlink" title="js代码压缩"></a>js代码压缩</h3><p>​    <strong>uglifyjs</strong>是一个js代码的压缩工具，webpack自带了该插件：<a href="https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin" target="_blank" rel="external">UglifyJsPlugin</a>，只需要在配置文件中引入即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">new UglifyJSPlugin()</div></pre></td></tr></table></figure>
+<h3 id="有关文件缓存"><a href="#有关文件缓存" class="headerlink" title="有关文件缓存"></a>有关文件缓存</h3><p>​    缓存是一个好东西，当浏览器第一次请求到静态文件之后会对其进行缓存，等下次再请求该文件时，那么浏览器会直接读取缓存文件。但浏览器读取缓存是基于文件名的，会导致即使文件内容更新了，但是浏览器依旧缓存中读取该文件。因此，缓存的最好方法是保证文件名和文件内容是一一对应的。</p>
+<p>​    webpack可以通过如下的配置方法来决定打包文件的唯一性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">output:&#123;</div><div class="line">    <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'../ECSQueryServices/assets'</span>), <span class="comment">// build directly to ECSQueryServices</span></div><div class="line">	publicPath: <span class="string">'/'</span>,</div><div class="line">	<span class="attr">filename</span>: <span class="string">'build/[name].[hash].bundle.js'</span></div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<h2 id="react相关配置"><a href="#react相关配置" class="headerlink" title="react相关配置"></a>react相关配置</h2><p>​    React在开发阶段会引入一些额外的模块来做代码警告等功能，这些是我们在生产阶段不再需要的，通过配置node环境为<code>production</code>可以让React以生产模式运行，配置方法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> webpack.DefinePlugin(&#123;</div><div class="line">  <span class="string">'process.env'</span>: &#123;</div><div class="line">    <span class="attr">NODE_ENV</span>: <span class="built_in">JSON</span>.stringify(<span class="string">'production'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;),</div><div class="line"><span class="keyword">new</span> webpack.optimize.UglifyJsPlugin()</div></pre></td></tr></table></figure>
+<h2 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h2><p>​    当完成了上述配置后，当我们执行<code>&quot;build&quot;: &quot;webpack --progress --color --watch --config ./webpack.product.config.js&quot;</code>命令，会报如下的错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Uncaught Error: locals[0] does not appear to be a `module` object with Hot Module replacement API enabled. You should disable react-transform-hmr in production by using `env` section in Babel configuration. See the example in README: https://github.com/gaearon/react-transform-hmr</div></pre></td></tr></table></figure>
+<p>​    看提示应该为<code>react-transform-hmr</code>插件的问题，我们在.babel.rc中配置仅在dev模式下使用<code>react-transform-hmr</code>模块：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="string">"env"</span>: &#123;</div><div class="line">  <span class="string">"development"</span>: &#123;</div><div class="line">    <span class="comment">// only enable it when process.env.NODE_ENV is 'development' or undefined</span></div><div class="line">    <span class="string">"plugins"</span>: [[<span class="string">"react-transform"</span>, &#123;</div><div class="line">      <span class="string">"transforms"</span>: [&#123;</div><div class="line">        <span class="string">"transform"</span>: <span class="string">"react-transform-hmr"</span>,</div><div class="line">        <span class="string">"imports"</span>: [<span class="string">"react"</span>],</div><div class="line">        <span class="string">"locals"</span>: [<span class="string">"module"</span>]</div><div class="line">      &#125;]</div><div class="line">    &#125;]]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​    并且在package.json中强制NODE_ENV为生产模式：<code>&quot;build&quot;: &quot;set NODE_ENV=production &amp;&amp; webpack --progress --color --watch --config ./webpack.product.config.js&quot;</code></p>
+<h2 id="待完成"><a href="#待完成" class="headerlink" title="待完成"></a>待完成</h2><p>​    其实仅通过<code>webpack.dev.config.js</code>和<code>webpack.production.config.js</code>来区分开发阶段和生产阶段的配置方案是不完美的，因为两个文件中有部分的相同配置项，如果有相应的改动，则两个文件的配置都需要进行一遍更新，这样维护起来不是很方便。Webpack官网的文章<a href="https://webpack.js.org/guides/production/" target="_blank" rel="external">Production</a>一文讲到了Advanced Approach，相同的配置项可以统一的放在同一份<code>webpack.common.js</code>中：</p>
+<blockquote>
+<p>A more complex approach would be to have a base configuration file, containing the configuration common to both environments, and then merge that with environment specific configurations. This would yield the full configuration for each environment and prevent repetition for the common bits.</p>
+</blockquote>
+<p>​    <code>React-bootstrap</code>貌似并没有类似于<code>Antd</code>的模块按需加载功能，需要自己配置样式文件来引入自己项目需要的组件：</p>
+<blockquote>
+<p>Customize Bootstrap’s components, Less variables, and jQuery plugins to get your very own version.</p>
+</blockquote>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>React官网文章：<a href="https://facebook.github.io/react/docs/optimizing-performance.html" target="_blank" rel="external">Optimizing Performance</a></p>
+<p>Webpack官网文章：<a href="https://webpack.js.org/guides/production/" target="_blank" rel="external">Production</a></p>
+<p><a href="https://segmentfault.com/a/1190000006952432" target="_blank" rel="external">webpack多页应用架构系列（七）：开发环境、生产环境傻傻分不清楚？</a></p>
+<p><a href="http://www.jianshu.com/p/a64735eb0e2b" target="_blank" rel="external">彻底解决 webpack 打包文件体积过大</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/30/git之两个仓库的合并操作/" rel="prev" title="git之两个仓库的合并操作">
+                git之两个仓库的合并操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="大头" />
+          <p class="site-author-name" itemprop="name">大头</p>
+           
+              <p class="site-description motion-element" itemprop="description">瀑布的壮观是在没有退路是形成的</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yaeljiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack相关配置"><span class="nav-number">1.</span> <span class="nav-text">webpack相关配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#移除不必要的插件"><span class="nav-number">1.1.</span> <span class="nav-text">移除不必要的插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置output-publicPath"><span class="nav-number">1.2.</span> <span class="nav-text">配置output.publicPath</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提取公共类库-打包公共代码"><span class="nav-number">1.3.</span> <span class="nav-text">提取公共类库/打包公共代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js代码压缩"><span class="nav-number">1.4.</span> <span class="nav-text">js代码压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有关文件缓存"><span class="nav-number">1.5.</span> <span class="nav-text">有关文件缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#react相关配置"><span class="nav-number">2.</span> <span class="nav-text">react相关配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他配置"><span class="nav-number">3.</span> <span class="nav-text">其他配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#待完成"><span class="nav-number">4.</span> <span class="nav-text">待完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">大头</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
