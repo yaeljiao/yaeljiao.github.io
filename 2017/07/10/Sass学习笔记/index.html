@@ -1,0 +1,755 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="​    Sass是使用Ruby语言编写的css预处理语言，诞生于2007年。Sass, LESS, stylus等css预处理语言为css增加了编程语言的特性，能够让css可读性增强、更易于后期维护。">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sass学习笔记">
+<meta property="og:url" content="http://yoursite.com/2017/07/10/Sass学习笔记/index.html">
+<meta property="og:site_name" content="Datou">
+<meta property="og:description" content="​    Sass是使用Ruby语言编写的css预处理语言，诞生于2007年。Sass, LESS, stylus等css预处理语言为css增加了编程语言的特性，能够让css可读性增强、更易于后期维护。">
+<meta property="og:updated_time" content="2017-07-10T14:08:59.641Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sass学习笔记">
+<meta name="twitter:description" content="​    Sass是使用Ruby语言编写的css预处理语言，诞生于2007年。Sass, LESS, stylus等css预处理语言为css增加了编程语言的特性，能够让css可读性增强、更易于后期维护。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/10/Sass学习笔记/"/>
+
+
+
+
+
+  <title> Sass学习笔记 | Datou </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datou</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/10/Sass学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="大头">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datou">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Sass学习笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-10T19:49:54+08:00">
+                2017-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>​    Sass是使用Ruby语言编写的css预处理语言，诞生于2007年。Sass, LESS, stylus等css预处理语言为css增加了编程语言的特性，能够让css可读性增强、更易于后期维护。</p>
+<a id="more"></a>
+<p>​    Sass和SCSS其实是同一种东西，我们平时都称之为 Sass，两者的区别在于：</p>
+<ul>
+<li>文件扩展名不同，Sass 是以<code>.sass</code>后缀为扩展名，而 SCSS 是以<code>.scss</code>后缀为扩展名</li>
+<li>语法书写方式不同，如下，Sass 是以严格的缩进式语法规则来书写，不带大括号<code>{}</code>和分号<code>;</code>，是类ruby的写法。而 SCSS 的语法是css3的超集，因此可以把现有的<code>.css</code>文件直接修改成<code>.scss</code>即可使用。</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//Sass</div><div class="line">body	</div><div class="line">  font: 100% $font-stack</div><div class="line">  color: $primary-color</div><div class="line"></div><div class="line">//SCSS</div><div class="line">body &#123;	</div><div class="line">  font: 100% $font-stack;</div><div class="line">  color: $primary-color;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​    </p>
+<h2 id="编译和输出方式"><a href="#编译和输出方式" class="headerlink" title="编译和输出方式"></a>编译和输出方式</h2><ul>
+<li>命令行编译：sass –watch sass/bootstrap.scss:css/bootstrap.css</li>
+<li>GUI工具编译：koala 是一款桌面程序，支持 less 、 sass 、 coffeescript 即时编译</li>
+<li>自动化编译：使用grunt、gulp等</li>
+</ul>
+<ul>
+<li>展开输出：sass –watch test.scss:test.css –style expanded {}会另起一行</li>
+<li>嵌套输出：sass –watch test.scss:test.css –style nested</li>
+<li>紧凑输出：sass –watch test.scss:test.css –style compact 每个样式写在一行</li>
+<li>压缩输出：sass –watch test.scss:test.css –style compressed 生产环境使用</li>
+</ul>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>我们说过SCSS的语法是CSS的超集，因此SCSS支持css注释风格：块注释<code>/* comment */</code>，该类型的注释会保留在编译后的文件中。</p>
+<p>Sass还支持单行注释<code>// commnet</code> ，该类型的注释在编译后会被省略。</p>
+<p>如果在块注释<code>/*</code>后面加一个感叹号，表示这是重要注释。即使是压缩模式编译，也会保留这行注释，通常可以用于声明版权信息。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*!    </span></div><div class="line">  important comment</div><div class="line">*/</div></pre></td></tr></table></figure>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>Sass变量以$开头</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$width: 300px;</div><div class="line">$height: 500px;</div><div class="line"></div><div class="line">.sec&#123;</div><div class="line">  widht: $widht;</div><div class="line">  height: $height;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h2><p>计算在一门计算机语言中是必须的，而css目前只有<code>calc()</code>支持运算，在Sass中扩充了计算功能。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span>&#123;</div><div class="line">  <span class="attribute">margin</span>: (<span class="number">14px</span>/<span class="number">2</span>);</div><div class="line">  <span class="attribute">top</span>: <span class="number">50px</span> + <span class="number">100px</span>;</div><div class="line">  <span class="attribute">right</span>: $var * <span class="number">10%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h2><p>Sass允许选择器进行嵌套。但要注意<code>:hover</code>的嵌套写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">a &#123;</div><div class="line">  :hover&#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">编译成=&gt;</div><div class="line">a :hover&#123;	// 等同于a *:hover(a标签下所有子标签的hover)</div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以使用父选择器的标识符<code>&amp;</code>显式的标明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">a&#123;</div><div class="line">  &amp;:hover&#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="代码复用"><a href="#代码复用" class="headerlink" title="代码复用"></a>代码复用</h2><h3 id="extend-继承"><a href="#extend-继承" class="headerlink" title="@extend 继承"></a>@extend 继承</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">.error&#123;</div><div class="line">  color: #f00;</div><div class="line">&#125;</div><div class="line">.error-serious&#123;</div><div class="line">  @extend .error;</div><div class="line">  border: 1px #f00</div><div class="line">&#125;</div><div class="line"></div><div class="line">编译成=&gt;</div><div class="line"></div><div class="line">.error .error-serious&#123;</div><div class="line">  color: #f00;</div><div class="line">&#125;</div><div class="line">.error-serious&#123;</div><div class="line">  border: 1px #f00;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="mixin-类似c语言的宏"><a href="#mixin-类似c语言的宏" class="headerlink" title="@mixin 类似c语言的宏"></a>@mixin 类似c语言的宏</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">@mixin col-6&#123;</div><div class="line">  width: 50%;</div><div class="line">  float: left;</div><div class="line">&#125;</div><div class="line">div&#123;</div><div class="line">  @include col-6;  	// 通过@include方式条用</div><div class="line">&#125;</div><div class="line"></div><div class="line">编译成=&gt;</div><div class="line"></div><div class="line">div&#123;</div><div class="line">  width: 50%;</div><div class="line">  float: left;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="import-引入文件"><a href="#import-引入文件" class="headerlink" title="@import 引入文件"></a>@import 引入文件</h3><p>css原生的@import指令有两大弊端：</p>
+<ul>
+<li>必须放在代码最前面</li>
+<li>当浏览器读到@import 指令的时候才会引入其他样式，这样页面处于阻塞状态，对性能不利</li>
+</ul>
+<p>局部文件以<code>_</code>开头，比如<code>_variables.scss</code>，待其他文件引用它，引用时候可以忽略<code>_</code>，比如<code>@import &#39;variables&#39;;</code></p>
+<p>所有的sass导入文件都可以忽略后缀名.scss。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>慕课网 - <a href="http://www.imooc.com/learn/364" target="_blank" rel="external">Sass和Compass必备技能之Sass篇</a></li>
+<li>慕课网 - <a href="http://www.imooc.com/learn/371" target="_blank" rel="external">Sass和Compass必备技能之Compass</a></li>
+<li>阮一峰 - <a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" target="_blank" rel="external">SASS用法指南</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/02/Webpack+React的生产阶段配置/" rel="prev" title="Webpack+React的生产阶段配置">
+                Webpack+React的生产阶段配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="大头" />
+          <p class="site-author-name" itemprop="name">大头</p>
+           
+              <p class="site-description motion-element" itemprop="description">瀑布的壮观是在没有退路是形成的</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yaeljiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译和输出方式"><span class="nav-number">1.</span> <span class="nav-text">编译和输出方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注释"><span class="nav-number">2.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">3.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算"><span class="nav-number">4.</span> <span class="nav-text">计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌套"><span class="nav-number">5.</span> <span class="nav-text">嵌套</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码复用"><span class="nav-number">6.</span> <span class="nav-text">代码复用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#extend-继承"><span class="nav-number">6.1.</span> <span class="nav-text">@extend 继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mixin-类似c语言的宏"><span class="nav-number">6.2.</span> <span class="nav-text">@mixin 类似c语言的宏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#import-引入文件"><span class="nav-number">6.3.</span> <span class="nav-text">@import 引入文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">大头</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
