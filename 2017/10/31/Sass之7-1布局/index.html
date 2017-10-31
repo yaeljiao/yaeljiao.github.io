@@ -87,19 +87,17 @@
 
 
 
-<meta name="description" content="​    目前在负责公司的一个前端项目，现有的版本是基于Ext.js框架进行搭建，但Ext.js显得过重，而且构建后的代码乱作一团，难以维护和更新。因此目前是在用React+Webpack对项目进行重新构建。前端部分存在着多个页面，因此需要进行Webpack的多页面配置，以下进行简单的记录和分享。">
+<meta name="description" content="​    使用css进行前端样式的编写无疑是痛苦的：所有的样式都放在同一个文件下，不支持变量，不支持嵌套语法，很容易写着写着就成百上千行，这使得样式的后期维护变得无比头疼。Sass, LESS, stylus等css预处理语言的出现无疑解决了css的很多痛点，例如使用Sass进行样式的编写能够让我们结构化的管理所有的样式文件，然后通过@import语法来引入到主样式文件上。这使得样式文件的可读性、">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Webpack之“多页面开发”配置">
-<meta property="og:url" content="http://yoursite.com/2017/06/11/Webpack之“多页面开发”配置/index.html">
+<meta property="og:title" content="Sass之7-1布局">
+<meta property="og:url" content="http://yoursite.com/2017/10/31/Sass之7-1布局/index.html">
 <meta property="og:site_name" content="Datou">
-<meta property="og:description" content="​    目前在负责公司的一个前端项目，现有的版本是基于Ext.js框架进行搭建，但Ext.js显得过重，而且构建后的代码乱作一团，难以维护和更新。因此目前是在用React+Webpack对项目进行重新构建。前端部分存在着多个页面，因此需要进行Webpack的多页面配置，以下进行简单的记录和分享。">
-<meta property="og:image" content="http://webpack.github.io/assets/what-is-webpack.png">
-<meta property="og:updated_time" content="2017-06-11T15:12:31.055Z">
+<meta property="og:description" content="​    使用css进行前端样式的编写无疑是痛苦的：所有的样式都放在同一个文件下，不支持变量，不支持嵌套语法，很容易写着写着就成百上千行，这使得样式的后期维护变得无比头疼。Sass, LESS, stylus等css预处理语言的出现无疑解决了css的很多痛点，例如使用Sass进行样式的编写能够让我们结构化的管理所有的样式文件，然后通过@import语法来引入到主样式文件上。这使得样式文件的可读性、">
+<meta property="og:updated_time" content="2017-10-31T08:10:52.035Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Webpack之“多页面开发”配置">
-<meta name="twitter:description" content="​    目前在负责公司的一个前端项目，现有的版本是基于Ext.js框架进行搭建，但Ext.js显得过重，而且构建后的代码乱作一团，难以维护和更新。因此目前是在用React+Webpack对项目进行重新构建。前端部分存在着多个页面，因此需要进行Webpack的多页面配置，以下进行简单的记录和分享。">
-<meta name="twitter:image" content="http://webpack.github.io/assets/what-is-webpack.png">
+<meta name="twitter:title" content="Sass之7-1布局">
+<meta name="twitter:description" content="​    使用css进行前端样式的编写无疑是痛苦的：所有的样式都放在同一个文件下，不支持变量，不支持嵌套语法，很容易写着写着就成百上千行，这使得样式的后期维护变得无比头疼。Sass, LESS, stylus等css预处理语言的出现无疑解决了css的很多痛点，例如使用Sass进行样式的编写能够让我们结构化的管理所有的样式文件，然后通过@import语法来引入到主样式文件上。这使得样式文件的可读性、">
 
 
 
@@ -127,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/06/11/Webpack之“多页面开发”配置/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/31/Sass之7-1布局/"/>
 
 
 
 
 
-  <title> Webpack之“多页面开发”配置 | Datou </title>
+  <title> Sass之7-1布局 | Datou </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -262,7 +260,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/11/Webpack之“多页面开发”配置/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/31/Sass之7-1布局/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="大头">
@@ -283,7 +281,7 @@
             
             
               
-                Webpack之“多页面开发”配置
+                Sass之7-1布局
               
             
           </h2>
@@ -298,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-11T21:24:54+08:00">
-                2017-06-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-31T18:32:11+08:00">
+                2017-10-31
               </time>
             
 
@@ -309,28 +307,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -339,9 +315,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/06/11/Webpack之“多页面开发”配置/#comments" itemprop="discussionUrl">
+                <a href="/2017/10/31/Sass之7-1布局/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/06/11/Webpack之“多页面开发”配置/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/10/31/Sass之7-1布局/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -372,16 +348,21 @@
       
 
       
-        <p>​    目前在负责公司的一个前端项目，现有的版本是基于Ext.js框架进行搭建，但Ext.js显得过重，而且构建后的代码乱作一团，难以维护和更新。因此目前是在用React+Webpack对项目进行重新构建。前端部分存在着多个页面，因此需要进行Webpack的多页面配置，以下进行简单的记录和分享。</p>
+        <p>​    使用css进行前端样式的编写无疑是痛苦的：所有的样式都放在同一个文件下，不支持变量，不支持嵌套语法，很容易写着写着就成百上千行，这使得样式的后期维护变得无比头疼。Sass, LESS, stylus等css预处理语言的出现无疑解决了css的很多痛点，例如使用Sass进行样式的编写能够让我们结构化的管理所有的样式文件，然后通过<code>@import</code>语法来引入到主样式文件上。这使得样式文件的可读性、维护性增强。以下记录scss经典的7-1布局，具体的Sass目录结构请参考：<a href="https://github.com/yaeljiao/sass-template" target="_blank" rel="external">Sass-template</a></p>
 <a id="more"></a>
-<p>​    Webpack是一个现代前端应用的模块打包器(module bundler)，它可以把如下图所示的具有<strong>各种依赖关系的</strong>文件打包成一个个的静态资源。</p>
-<p><img src="http://webpack.github.io/assets/what-is-webpack.png" alt="webpack workflow"></p>
-<h2 id="Webpack-config-js配置"><a href="#Webpack-config-js配置" class="headerlink" title="Webpack.config.js配置"></a>Webpack.config.js配置</h2><p>​    entry配置：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">entry: &#123;</div><div class="line">    <span class="attr">login</span>: [</div><div class="line">        <span class="string">'webpack-dev-server/client?http://localhost:8080/login'</span>,</div><div class="line">        __dirname + <span class="string">'/src/scripts/login.js'</span></div><div class="line">    ],</div><div class="line">    <span class="attr">main</span>: [</div><div class="line">        <span class="string">'webpack-dev-server/client?http://localhost:8080/main'</span>,</div><div class="line">        __dirname + <span class="string">'/src/scripts/main.js'</span></div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>​    output配置：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">output:&#123;</div><div class="line">    <span class="attr">path</span>: __dirname + <span class="string">'/public'</span>,</div><div class="line">    <span class="attr">filename</span>: <span class="string">'build/[name].js'</span>		<span class="comment">// 构建后的文件，[name]会与entry的key name保持</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>​    plugins配置，需要用到<code>html-webpack-plugin</code>插件，该插件可以通过配置html模板来生成目标html文件，目前该项目有两个页面(main.html和login.html)，每个html文件需要单独配置。配置如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">plugins: [</div><div class="line">    <span class="comment">// need to config for each page</span></div><div class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</div><div class="line">        <span class="attr">title</span>: <span class="string">'MyECS - Log in'</span>,</div><div class="line">        <span class="attr">favicon</span>: __dirname + <span class="string">'/src/styles/images/favicon.ico'</span>,</div><div class="line">        <span class="attr">template</span>: __dirname + <span class="string">'/src/index.html'</span>,</div><div class="line">        <span class="attr">filename</span>: <span class="string">'login.html'</span>,</div><div class="line">        <span class="attr">chunks</span>: [<span class="string">'login'</span>]   <span class="comment">// Allows to add only some chunks, ['login'] means login.js</span></div><div class="line">    &#125;),</div><div class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</div><div class="line">        <span class="attr">title</span>: <span class="string">'MyECS'</span>,</div><div class="line">        <span class="attr">favicon</span>: __dirname + <span class="string">'/src/styles/images/favicon.ico'</span>,</div><div class="line">        <span class="attr">template</span>: __dirname + <span class="string">'/src/index.html'</span>,</div><div class="line">        <span class="attr">filename</span>: <span class="string">'main.html'</span>,</div><div class="line">        <span class="attr">chunks</span>: [<span class="string">'main'</span>]</div><div class="line">    &#125;)</div><div class="line">]</div></pre></td></tr></table></figure>
+<h1 id="基本目录结构-7–1-Pattern"><a href="#基本目录结构-7–1-Pattern" class="headerlink" title="基本目录结构(7–1 Pattern)"></a>基本目录结构(7–1 Pattern)</h1><p>​    scss的目录结构与js相似的目录结构：相同的组件统一放在一个文件夹下，然后绑定到DOM节点的父组件放在最外层目录下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">styles/</div><div class="line">|</div><div class="line">|-- base/				   # 包含整个项目最基本的基础样式</div><div class="line">|	|-- _reset.scss			# 或者_normalize.scss</div><div class="line">|	|-- _typography.scss	 # 排版样式</div><div class="line">|	|-- _base.scss			# 一些通用的html标签的样式，比如&lt;body/&gt;, &lt;a/&gt;</div><div class="line">|   …</div><div class="line">|</div><div class="line">|-- components/				# 基础组件</div><div class="line">|   |-- _buttons.scss      	  # 按钮</div><div class="line">|   |-- _search.scss       	  # 搜索按钮</div><div class="line">|   …</div><div class="line">|</div><div class="line">|-- helpers/</div><div class="line">|   |-- _variables.scss    	  # Sass Variables</div><div class="line">|   |-- _functions.scss    	  # Sass Functions</div><div class="line">|   |-- _mixins.scss       	  # Sass Mixins</div><div class="line">|   …</div><div class="line">|</div><div class="line">|-- layouts/</div><div class="line">|   |-- _header.scss       	  # Header</div><div class="line">|   |-- _footer.scss       	  # Footer</div><div class="line">|   |-- _sidebar.scss         # Sidebar</div><div class="line">|   …</div><div class="line">|</div><div class="line">|-- pages/</div><div class="line">|   |– _admin.scss         	  # admin页面的特殊样式</div><div class="line">|   |– _login.scss         	  # login页面的特殊样式</div><div class="line">|   |– _main.scss          	  # main页面的特殊样式</div><div class="line">|   …</div><div class="line">|</div><div class="line">|– themes/</div><div class="line">|   |– _theme.scss        	  # 默认主题</div><div class="line">|   …</div><div class="line">|</div><div class="line">|-- vendor/               	  # 来自第三方的CSS或Sass文件，比如Bootstrap, jQuery</div><div class="line">|   |-- _hon-dls.min.scss</div><div class="line">|   |-- _loadMask.scss    </div><div class="line">|   |-- _react-bootstrap-table.min.css # 当然可以包含css文件</div><div class="line">|   …</div><div class="line">|</div><div class="line">`-- main.scss            	  # 主Sass文件放在最外层目录下</div><div class="line">`-- admin.scss</div><div class="line">`-- login.scss</div><div class="line">`-- changePwd.scss</div><div class="line">`-- resetPwd.scss</div></pre></td></tr></table></figure>
+<h1 id="主样式表"><a href="#主样式表" class="headerlink" title="主样式表"></a>主样式表</h1><p>​    主样式表应该尽可能的干净整洁，所有样式都通过<code>@import</code>进行引用。为了保证可读性，主样式表应该遵循如下的规范：</p>
+<ul>
+<li>一个<code>@import</code>对应一个文件</li>
+<li>一个<code>@import</code>占一行</li>
+<li>相同文件夹下的两个<code>@import</code>之间不空行</li>
+<li>不同文件夹下的两个<code>@import</code>之间要空行</li>
+<li>省略文件后缀，省略前导的<code>_</code>下划线</li>
+</ul>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">import</span> <span class="string">"helpers/variables"</span>;</div><div class="line">@<span class="keyword">import</span> <span class="string">"helpers/mixins"</span>;</div><div class="line"></div><div class="line">@<span class="keyword">import</span> <span class="string">'vendors/loadMask'</span>;</div><div class="line">@<span class="keyword">import</span> <span class="string">'vendors/bootstrap.min.css'</span>;</div><div class="line"></div><div class="line">@<span class="keyword">import</span> <span class="string">"base/base"</span>;</div><div class="line">@<span class="keyword">import</span> <span class="string">"base/typography"</span>;</div><div class="line"></div><div class="line">@<span class="keyword">import</span> <span class="string">"components/button"</span>;</div><div class="line"></div><div class="line">@<span class="keyword">import</span> <span class="string">"layout/header"</span>;</div><div class="line">@<span class="keyword">import</span> <span class="string">"layout/footer"</span>;</div><div class="line"></div><div class="line">@<span class="keyword">import</span> <span class="string">"pages/_main"</span>;</div></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://sass-guidelin.es/#architecture" target="_blank" rel="external">sass-guidelin.es/#architecture</a></p>
+<p><a href="https://github.com/HugoGiraudel/sass-boilerplate" target="_blank" rel="external">sass-boilerplate</a></p>
 
       
     </div>
@@ -418,18 +399,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/19/ESLint之jsx-no-target-blank/" rel="next" title="ESLint之jsx-no-target-blank">
-                <i class="fa fa-chevron-left"></i> ESLint之jsx-no-target-blank
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/12/框架(framework)和库(library)/" rel="prev" title="框架(framework)和库(library)">
-                框架(framework)和库(library) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/10/30/在前端开发中mock后端数据/" rel="prev" title="在前端开发中mock后端数据">
+                在前端开发中mock后端数据 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -568,7 +545,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Webpack-config-js配置"><span class="nav-number">1.</span> <span class="nav-text">Webpack.config.js配置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本目录结构-7–1-Pattern"><span class="nav-number">1.</span> <span class="nav-text">基本目录结构(7–1 Pattern)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主样式表"><span class="nav-number">2.</span> <span class="nav-text">主样式表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
@@ -727,9 +704,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2017/06/11/Webpack之“多页面开发”配置/';
-          this.page.identifier = '2017/06/11/Webpack之“多页面开发”配置/';
-          this.page.title = 'Webpack之“多页面开发”配置';
+          this.page.url = 'http://yoursite.com/2017/10/31/Sass之7-1布局/';
+          this.page.identifier = '2017/10/31/Sass之7-1布局/';
+          this.page.title = 'Sass之7-1布局';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://Zhichao.disqus.com/embed.js';
