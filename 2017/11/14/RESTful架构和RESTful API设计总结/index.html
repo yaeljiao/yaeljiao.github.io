@@ -1,0 +1,805 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="对REST的理解​    REST这个词是2000年Roy Fielding在他的博士论文中提出的，Fielding参与了http协议的设计，也是Apache web server项目的参与者。REST(Representational State Transfer, 表现层状态转移)可以分解成以下几个部分来进行解读：">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RESTful架构和RESTful API设计总结">
+<meta property="og:url" content="http://yoursite.com/2017/11/14/RESTful架构和RESTful API设计总结/index.html">
+<meta property="og:site_name" content="Zhichao">
+<meta property="og:description" content="对REST的理解​    REST这个词是2000年Roy Fielding在他的博士论文中提出的，Fielding参与了http协议的设计，也是Apache web server项目的参与者。REST(Representational State Transfer, 表现层状态转移)可以分解成以下几个部分来进行解读：">
+<meta property="og:updated_time" content="2017-11-14T12:17:17.067Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RESTful架构和RESTful API设计总结">
+<meta name="twitter:description" content="对REST的理解​    REST这个词是2000年Roy Fielding在他的博士论文中提出的，Fielding参与了http协议的设计，也是Apache web server项目的参与者。REST(Representational State Transfer, 表现层状态转移)可以分解成以下几个部分来进行解读：">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/14/RESTful架构和RESTful API设计总结/"/>
+
+
+
+
+
+  <title> RESTful架构和RESTful API设计总结 | Zhichao </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhichao</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/14/RESTful架构和RESTful API设计总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhichao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhichao">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                RESTful架构和RESTful API设计总结
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T20:17:11+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/RESTful架构和RESTful API设计总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/RESTful架构和RESTful API设计总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="对REST的理解"><a href="#对REST的理解" class="headerlink" title="对REST的理解"></a>对REST的理解</h1><p>​    REST这个词是2000年<a href="https://en.wikipedia.org/wiki/Roy_Fielding" target="_blank" rel="external">Roy Fielding</a>在他的博士论文中提出的，Fielding参与了http协议的设计，也是Apache web server项目的参与者。REST(Representational State Transfer, 表现层状态转移)可以分解成以下几个部分来进行解读：</p>
+<a id="more"></a>
+<p><strong>Resource 资源</strong></p>
+<p>REST忽略了主语，全称应该是<strong>资源的</strong>表现层状态转移。所谓资源就是互联网上的各种资源，比如文本、图片、音频、视频等。在互联网上通过URI指定唯一的资源，所谓的’<strong>上网‘</strong>就是通过调用资源的URL来跟互联网上的一系列资源进行互动。</p>
+<p>注：URI只代表资源的实体，严格地说，有些网址最后的<code>.html</code>后缀名是不必要的，因为这个后缀名表示格式，属于”表现层”范畴，而URI应该只代表”资源”的位置。</p>
+<p><strong>Representational 表象</strong></p>
+<p>资源可以有各种具体的表现形式，比如文本可以有<code>xml</code>格式，<code>html</code>格式，<code>json</code>格式，甚至是二进制格式，图片可以有<code>PNG</code>格式，<code>JPEG</code>格式等。资源的一个具体表现形式，应该在HTTP请求的头信息中用<code>Accept</code>和<code>Content-Type</code>字段指定，这两个字段才是对”表现层”的描述。</p>
+<p><strong>State Transfer 状态转移</strong></p>
+<p>通过http动词来实现资源的状态转移，用<code>GET</code>来请求资源，用<code>POST</code>来新建资源，用<code>PUT</code>来更新资源，用<code>DELETE</code>来删除资源。</p>
+<p>简明扼要的总结REST：</p>
+<ul>
+<li>用URI来定位具体的资源</li>
+<li>用HTTP请求的Content-Type字段来描述资源的表现形式</li>
+<li>用HTTP动词来描述对资源的具体操作</li>
+</ul>
+<hr>
+<h1 id="RESTful-API设计总结"><a href="#RESTful-API设计总结" class="headerlink" title="RESTful API设计总结"></a>RESTful API设计总结</h1><p>​    随着近年来移动互联网的发展，各种客户端出不穷：Web，IOS，Android。因此需要一种机制使得各种客户端能够和服务端进行通讯，这就使得RESTful API的架构流行起来。RESTful是REST(表现层状态转化)的形容词形式，因此RESTful API就可以理解成“符合REST风格的API”。</p>
+<h2 id="格式规范"><a href="#格式规范" class="headerlink" title="格式规范"></a>格式规范</h2><p> 根据RFC3986定义，URL是大小写敏感的。所以为了避免歧义，尽量使用小写字母。</p>
+<p>RESTful API 应具备良好的可读性，当url中某一个片段（segment）由多个单词组成时，建议使用 <code>-</code> 来隔断单词，而不是使用 <code>_</code>。这主要是因为，浏览器中超链接显示的默认效果是<strong>文字并附带下划线</strong>，如果API以<code>_</code>隔断单词，二者会重叠，影响可读性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/api/featured-post/		# GOOD</div><div class="line">/api/featured_post/		# WRONG</div></pre></td></tr></table></figure>
+<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>提供给用户的API，总是使用HTTPs协议。使用HTTPs协议还是HTTP协议本身和RESTful API并无关系，但是这对于提高网站的安全性很重要。</p>
+<h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p>API应该放在专有域名下，比如<code>https://api.example.com/v1</code>。也可以简单地把版本放在URL中，比如<code>https://www.example.com/api/v1</code></p>
+<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p>API的版本号应该放在URL中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://api.example.com/v1/</div></pre></td></tr></table></figure>
+<h2 id="名词应该使用复数"><a href="#名词应该使用复数" class="headerlink" title="名词应该使用复数"></a>名词应该使用复数</h2><p>​    所用的名词往往和数据库的表名对应，而数据库的表是一组记录的集合，因此URL中的名词即表示一组资源的集合，故URI中的名词要使用复数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">https://api.example.com/v1/students</div><div class="line">https://api.example.com/v1/schools</div><div class="line">https://api.example.com/v1/employees</div></pre></td></tr></table></figure>
+<h2 id="URL中不能使用动词"><a href="#URL中不能使用动词" class="headerlink" title="URL中不能使用动词"></a>URL中不能使用动词</h2><p>​    URI代表着一个资源，是一个实体，应该是名词，而不要把具体的动作放在URL中，对资源的操作应该通过HTTP的动词来实现。</p>
+<h2 id="不符合CRUD的情况"><a href="#不符合CRUD的情况" class="headerlink" title="不符合CRUD的情况"></a>不符合CRUD的情况</h2><p>​    如果实在无法表示，也可使用动词，例如search没有对应的HTTP方法，可以在路径中使用search，更加直观<code>http://api.xxx.com/apiv3/search?timestamp=123213218&amp;user_id=4192121&amp;keyword=2134789</code>。再例如创建了博客网站，如果想要发布一个博客，可以使用<code>POST /articles/{:id}/publish</code></p>
+<p>​    </p>
+<h2 id="用HTTP动词表示对资源的操作"><a href="#用HTTP动词表示对资源的操作" class="headerlink" title="用HTTP动词表示对资源的操作"></a>用HTTP动词表示对资源的操作</h2><p>使用HTTP协议里的动词来实现资源的获取、删除、添加等操作</p>
+<ul>
+<li>GET：从服务器获取资源</li>
+<li>POST：在服务器新建一个资源</li>
+<li>PUT：在服务器更新资源（客户端提供改变后的完整资源）</li>
+<li>PATCH：在服务器更新资源（客户端提供改变的属性）</li>
+<li>DELETE：从服务器中删除资源</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">GET		https://api.example.com/v1/schools 					<span class="comment"># 列出所有学校</span></div><div class="line">POST	https://api.example.com/v1/schools 					<span class="comment"># 新建一个学校</span></div><div class="line">GET		https://api.example.com/v1/schools/ID				<span class="comment"># 列出指定学校的信息</span></div><div class="line">DELETE	https://api.example.com/v1/schools/ID				<span class="comment"># 删除指定学校</span></div><div class="line"></div><div class="line">GET		https://api.example.com/v1/schools/ID/students		<span class="comment"># 列出指定学校的所有学生</span></div><div class="line">DELETE	https://api.example.com/v1/schools/ID/students/ID	<span class="comment"># 删除指定学校的指定学生</span></div></pre></td></tr></table></figure>
+<h2 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h2><ul>
+<li>200 OK - [GET]：服务器成功返回用户请求的数据</li>
+<li>201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功</li>
+<li>204 NO CONTENT - [DELETE]：用户删除数据成功</li>
+<li>400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作</li>
+<li>401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）</li>
+<li>404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作</li>
+<li>500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功</li>
+</ul>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>API的身份认证应该使用<a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="external">OAuth 2.0</a>框架</p>
+<p>服务器返回的数据格式，应该尽量使用JSON，避免使用XML。JSON有可读性强，结构紧凑，支持的语言种类多的特点，因此JSON是RESTful API最常用的返回格式。</p>
+<hr>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.ruanyifeng.com/blog/2011/09/restful.html" target="_blank" rel="external">理解RESTful架构</a> - 阮一峰</p>
+<p><a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html" target="_blank" rel="external">RESTful API 设计指南</a> - 阮一峰</p>
+<p><a href="http://cizixs.com/2016/12/12/restful-api-design-guide" target="_blank" rel="external">跟着 Github 学习 Restful HTTP API 设计</a></p>
+<p><a href="http://blog.restcase.com/5-basic-rest-api-design-guidelines/" target="_blank" rel="external">5 Basic REST API Design Guidelines</a></p>
+<p><a href="https://stackoverflow.com/questions/778203/are-there-any-naming-convention-guidelines-for-rest-apis" target="_blank" rel="external">Are there any naming convention guidelines for REST APIs?</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/31/Sass之7-1布局/" rel="prev" title="Sass之7-1布局">
+                Sass之7-1布局 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Zhichao" />
+          <p class="site-author-name" itemprop="name">Zhichao</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yaeljiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#对REST的理解"><span class="nav-number">1.</span> <span class="nav-text">对REST的理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RESTful-API设计总结"><span class="nav-number">2.</span> <span class="nav-text">RESTful API设计总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#格式规范"><span class="nav-number">2.1.</span> <span class="nav-text">格式规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协议"><span class="nav-number">2.2.</span> <span class="nav-text">协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#域名"><span class="nav-number">2.3.</span> <span class="nav-text">域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本"><span class="nav-number">2.4.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#名词应该使用复数"><span class="nav-number">2.5.</span> <span class="nav-text">名词应该使用复数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URL中不能使用动词"><span class="nav-number">2.6.</span> <span class="nav-text">URL中不能使用动词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不符合CRUD的情况"><span class="nav-number">2.7.</span> <span class="nav-text">不符合CRUD的情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用HTTP动词表示对资源的操作"><span class="nav-number">2.8.</span> <span class="nav-text">用HTTP动词表示对资源的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP状态码"><span class="nav-number">2.9.</span> <span class="nav-text">HTTP状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其它"><span class="nav-number">2.10.</span> <span class="nav-text">其它</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhichao</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Zhichao.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2017/11/14/RESTful架构和RESTful API设计总结/';
+          this.page.identifier = '2017/11/14/RESTful架构和RESTful API设计总结/';
+          this.page.title = 'RESTful架构和RESTful API设计总结';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Zhichao.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
