@@ -94,16 +94,16 @@
 <meta property="og:url" content="http://yoursite.com/2018/02/05/Web认证相关总结/index.html">
 <meta property="og:site_name" content="Zhichao">
 <meta property="og:description" content="​    总结在Web开发中跟认证相关的流程，该案例使用Node.js托管前端页面，实现到后端服务器的路由跳转，称为UI Service；业务相关的请求放在Query Service中；认证相关的请求（比如登录、登出、更改密码、Token认证等）放在Auth Service中。">
-<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/用户认证相关总结/登录相关数据库.png">
-<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/用户认证相关总结/login.png">
-<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/用户认证相关总结/forgetpassword.png">
-<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/用户认证相关总结/resetpassword.png">
-<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/用户认证相关总结/login.png">
-<meta property="og:updated_time" content="2018-02-09T06:47:33.791Z">
+<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/登录相关数据库.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/login.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/forgetpassword.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/resetpassword.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/login.png">
+<meta property="og:updated_time" content="2018-02-09T06:59:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web认证相关总结">
 <meta name="twitter:description" content="​    总结在Web开发中跟认证相关的流程，该案例使用Node.js托管前端页面，实现到后端服务器的路由跳转，称为UI Service；业务相关的请求放在Query Service中；认证相关的请求（比如登录、登出、更改密码、Token认证等）放在Auth Service中。">
-<meta name="twitter:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/用户认证相关总结/登录相关数据库.png">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/登录相关数据库.png">
 
 
 
@@ -378,11 +378,11 @@
       
         <p>​    总结在Web开发中跟认证相关的流程，该案例使用Node.js托管前端页面，实现到后端服务器的路由跳转，称为UI Service；业务相关的请求放在Query Service中；认证相关的请求（比如登录、登出、更改密码、Token认证等）放在Auth Service中。</p>
 <a id="more"></a>
-<h1 id="认证相关的数据库设计"><a href="#认证相关的数据库设计" class="headerlink" title="认证相关的数据库设计"></a>认证相关的数据库设计</h1><p><img src="/2018/02/05/Web认证相关总结/./用户认证相关总结/登录相关数据库.png" alt=""></p>
+<h1 id="认证相关的数据库设计"><a href="#认证相关的数据库设计" class="headerlink" title="认证相关的数据库设计"></a>认证相关的数据库设计</h1><p><img src="/2018/02/05/Web认证相关总结/登录相关数据库.png" alt=""></p>
 <h2 id="account表"><a href="#account表" class="headerlink" title="account表"></a>account表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">account</span></div><div class="line">(</div><div class="line">   <span class="keyword">id</span>                   <span class="built_in">char</span>(<span class="number">32</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   account_access_info_id <span class="built_in">char</span>(<span class="number">32</span>),</div><div class="line">   company_id           <span class="built_in">char</span>(<span class="number">32</span>),</div><div class="line">   firstname            <span class="built_in">varchar</span>(<span class="number">32</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   lastname             <span class="built_in">varchar</span>(<span class="number">32</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   email                <span class="built_in">varchar</span>(<span class="number">32</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   phone_number         <span class="built_in">varchar</span>(<span class="number">32</span>),</div><div class="line">   title                <span class="built_in">varchar</span>(<span class="number">32</span>),</div><div class="line">   <span class="keyword">password</span>             <span class="built_in">varchar</span>(<span class="number">200</span>),</div><div class="line">   <span class="keyword">salt</span>                 <span class="built_in">varchar</span>(<span class="number">200</span>),</div><div class="line">   reset_password_token <span class="built_in">varchar</span>(<span class="number">200</span>),</div><div class="line">   reset_password_token_expire <span class="keyword">timestamp</span>,</div><div class="line">   is_active            bool <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   last_update_time     <span class="keyword">timestamp</span>,</div><div class="line">   update_count         <span class="built_in">int</span>,</div><div class="line">   primary <span class="keyword">key</span> (<span class="keyword">id</span>)</div><div class="line">);</div></pre></td></tr></table></figure>
 <h2 id="account-access-info表"><a href="#account-access-info表" class="headerlink" title="account_access_info表"></a>account_access_info表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> account_access_info</div><div class="line">(</div><div class="line">   <span class="keyword">id</span>                   <span class="built_in">char</span>(<span class="number">32</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   account_id           <span class="built_in">char</span>(<span class="number">32</span>),</div><div class="line">   login_token          <span class="built_in">varchar</span>(<span class="number">200</span>),</div><div class="line">   login_token_expire   <span class="keyword">timestamp</span>,</div><div class="line">   attempts             <span class="built_in">int</span>,</div><div class="line">   last_attempts_time   <span class="keyword">timestamp</span>,</div><div class="line">   is_locked            bool <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   primary <span class="keyword">key</span> (<span class="keyword">id</span>)</div><div class="line">);</div></pre></td></tr></table></figure>
 <hr>
-<h1 id="登录认证"><a href="#登录认证" class="headerlink" title="登录认证"></a>登录认证</h1><p><img src="/2018/02/05/Web认证相关总结/./用户认证相关总结/login.png" alt=""></p>
+<h1 id="登录认证"><a href="#登录认证" class="headerlink" title="登录认证"></a>登录认证</h1><p><img src="/2018/02/05/Web认证相关总结/login.png" alt=""></p>
 <h2 id="前端认证"><a href="#前端认证" class="headerlink" title="前端认证"></a>前端认证</h2><p>​    登录过程首先要前端做一遍认证，用于拦截掉普通用户输入错误的情况，比如邮箱格式，密码格式（8-15位并且必须有大小写字母和数字）</p>
 <ul>
 <li>初始状态，登录按钮处于disable状态，鼠标无法点击，即无法提交POST请求</li>
@@ -420,7 +420,7 @@
 <p>判断是移动端还是web端发送的请求，然后将相应的token删除，并返回200</p>
 <hr>
 <h1 id="忘记密码认证"><a href="#忘记密码认证" class="headerlink" title="忘记密码认证"></a>忘记密码认证</h1><p>​    在前端的登录页面有<code>Forget password</code>的按钮，当用户忘记密码，通过POST <code>/passport/forgotpassword</code>请求并携带用户名</p>
-<p><img src="/2018/02/05/Web认证相关总结/./用户认证相关总结/forgetpassword.png" alt=""></p>
+<p><img src="/2018/02/05/Web认证相关总结/forgetpassword.png" alt=""></p>
 <hr>
 <p>后端首先验证用户名<code>Validators.validateEmailAddress</code>（要永远对前端的请求保持怀疑态度）</p>
 <p>从account表查找用户名，如果不存在，返回400 Invalid username</p>
@@ -432,7 +432,7 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></div><div class="line">  You recently requested a password reset for your ECS Monitoring System account. Please click on the below link to continue resetting your password.</div><div class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"$&#123;resetpassword&#125;"</span>&gt;</span>Reset Your Password &amp;gt;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>接着会执行重置密码的认证</p>
 <hr>
-<h1 id="重置密码认证"><a href="#重置密码认证" class="headerlink" title="重置密码认证"></a>重置密码认证</h1><p><img src="/2018/02/05/Web认证相关总结/./用户认证相关总结/resetpassword.png" alt=""></p>
+<h1 id="重置密码认证"><a href="#重置密码认证" class="headerlink" title="重置密码认证"></a>重置密码认证</h1><p><img src="/2018/02/05/Web认证相关总结/resetpassword.png" alt=""></p>
 <p>​    有两种情况会执行重置密码的认证：一是用户忘记密码， 执行忘记密码的认证之后，用户会收到重置密码的邮件；二是管理员在后台管理界面新增加一个用户，该用户会收到一封创建帐号的邮件。不论是上述哪种情况，在邮件中会有一个<code>/resetpassword/{token}</code>的URL，用于跳转到重置密码的界面。</p>
 <hr>
 <p>后端收到<code>/resetpassword/{token}</code>的GET请求后，验证token是否为空，否则返回400 Missing token</p>
@@ -452,7 +452,7 @@
 <p>返回200，并给用户发送一封邮件通知密码已经重置成功</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Dear $&#123;firstname&#125; $&#123;lastname&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>You recently changed your password for xxx System.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>If you didn't make this password change or if you believe unauthorized person has accessed your account, please go to <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"xxx.xxx.com"</span>&gt;</span>Forgot Password<span class="tag">&lt;/<span class="name">a</span>&gt;</span> to reset your password immediately.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>
 <hr>
-<h1 id="更改密码认证"><a href="#更改密码认证" class="headerlink" title="更改密码认证"></a>更改密码认证</h1><p><img src="/2018/02/05/Web认证相关总结/./用户认证相关总结/login.png" alt=""></p>
+<h1 id="更改密码认证"><a href="#更改密码认证" class="headerlink" title="更改密码认证"></a>更改密码认证</h1><p><img src="/2018/02/05/Web认证相关总结/login.png" alt=""></p>
 <ul>
 <li>验证password, confirmPassword是否相同</li>
 <li>验证currentPassword, password是否相同</li>

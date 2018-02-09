@@ -94,13 +94,13 @@
 <meta property="og:url" content="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful API/index.html">
 <meta property="og:site_name" content="Zhichao">
 <meta property="og:description" content="常用的认证机制 Cookie/Session Auth：在服务端创建一个Session对象，同时在客户端的浏览器端创建一个Cookie对象；通过客户端发来的请求中携带的Cookie对象与服务器端的session对象进行匹配，来实现认证 OAuth (Open Authorization, 开放授权) Token Auth：基于JWT的Token认证机制实现">
-<meta property="og:image" content="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful%20API/Web安全之使用JWT保护RESTful%20API/2018-02-06_162153.png">
-<meta property="og:image" content="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful%20API/Web安全之使用JWT保护RESTful%20API/2018-02-06_162138.png">
-<meta property="og:updated_time" content="2018-02-09T06:21:13.020Z">
+<meta property="og:image" content="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful%20API/2018-02-06_162153.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful%20API/2018-02-06_162138.png">
+<meta property="og:updated_time" content="2018-02-09T06:59:25.631Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web应用中使用JWT保护RESTful API">
 <meta name="twitter:description" content="常用的认证机制 Cookie/Session Auth：在服务端创建一个Session对象，同时在客户端的浏览器端创建一个Cookie对象；通过客户端发来的请求中携带的Cookie对象与服务器端的session对象进行匹配，来实现认证 OAuth (Open Authorization, 开放授权) Token Auth：基于JWT的Token认证机制实现">
-<meta name="twitter:image" content="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful%20API/Web安全之使用JWT保护RESTful%20API/2018-02-06_162153.png">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful%20API/2018-02-06_162153.png">
 
 
 
@@ -394,8 +394,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50dHlwZSI6MSwiZXhwIjoxNTAyMjgwNzY4LCJpYXQiOjE1MDIxOTQzNjgsInN1YiI6IjU5MzdlM2U1YmM0ZmQ2NmYzOTljNGMyMCJ9.wEY7c2uKMtk0Fyu2t5RKhEqViJcRV2cu22VyxGy9aRGC3IrFmfqFSGnhvYA5BqflZku0Fug4UJciVBZDB1Q2Ot-TP7-gC-Mve0cWAgHazWNkWXt5taJqtOrxRvHJbQuXCnHKn-syM9Iq5Jlja0GBu6WQ5PteBW7Ztv_OhDly2_4</div></pre></td></tr></table></figure>
 <p>​    签名的目的：<strong>保证 JWT 没有被篡改过。</strong>使用加密算法能够保证不同的输入产生的输出总是不一样的，如果有人恶意篡改了头部或负载中的信息，通过相同的密钥进行加密得到的签名肯定不再相同，此时即可证明token是无效的。</p>
 <h3 id="JWT例子"><a href="#JWT例子" class="headerlink" title="JWT例子"></a>JWT例子</h3><p>​    <a href="https://jwt.io/" target="_blank" rel="external">JWT的官网</a>首页给出了非常适合入门的例子，分别提供了HS256和RS256算法的测试。RS256 (RSA Signature with SHA-256)是一种非对称加密算法，HS256 (HMAC with SHA-256)是一种对称加密算法。</p>
-<p><img src="/2018/02/06/Web应用中使用JWT保护RESTful API/./Web安全之使用JWT保护RESTful API/2018-02-06_162153.png" alt=""></p>
-<p><img src="/2018/02/06/Web应用中使用JWT保护RESTful API/./Web安全之使用JWT保护RESTful API/2018-02-06_162138.png" alt=""></p>
+<p><img src="/2018/02/06/Web应用中使用JWT保护RESTful API/2018-02-06_162153.png" alt=""></p>
+<p><img src="/2018/02/06/Web应用中使用JWT保护RESTful API/2018-02-06_162138.png" alt=""></p>
 <hr>
 <h2 id="JWT的认证过程"><a href="#JWT的认证过程" class="headerlink" title="JWT的认证过程"></a>JWT的认证过程</h2><ol>
 <li>用户在登录页面，使用POST请求发送用户名、密码给后端进行登录</li>
