@@ -1,0 +1,901 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="后端," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="​    总结在Web开发中跟认证相关的流程，该案例使用Node.js托管前端页面，实现到后端服务器的路由跳转，称为UI Service；业务相关的请求放在Query Service中；认证相关的请求（比如登录、登出、更改密码、Token认证等）放在Auth Service中。">
+<meta name="keywords" content="后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web认证相关总结">
+<meta property="og:url" content="http://yoursite.com/2018/02/05/Web认证相关总结/index.html">
+<meta property="og:site_name" content="Zhichao">
+<meta property="og:description" content="​    总结在Web开发中跟认证相关的流程，该案例使用Node.js托管前端页面，实现到后端服务器的路由跳转，称为UI Service；业务相关的请求放在Query Service中；认证相关的请求（比如登录、登出、更改密码、Token认证等）放在Auth Service中。">
+<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/用户认证相关总结/登录相关数据库.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/用户认证相关总结/login.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/用户认证相关总结/forgetpassword.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/用户认证相关总结/resetpassword.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/用户认证相关总结/login.png">
+<meta property="og:updated_time" content="2018-02-09T06:47:33.791Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web认证相关总结">
+<meta name="twitter:description" content="​    总结在Web开发中跟认证相关的流程，该案例使用Node.js托管前端页面，实现到后端服务器的路由跳转，称为UI Service；业务相关的请求放在Query Service中；认证相关的请求（比如登录、登出、更改密码、Token认证等）放在Auth Service中。">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/05/Web认证相关总结/用户认证相关总结/登录相关数据库.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/05/Web认证相关总结/"/>
+
+
+
+
+
+  <title> Web认证相关总结 | Zhichao </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhichao</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/05/Web认证相关总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhichao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhichao">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Web认证相关总结
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-05T01:00:00+08:00">
+                2018-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后端/" itemprop="url" rel="index">
+                    <span itemprop="name">后端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/05/Web认证相关总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/02/05/Web认证相关总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>​    总结在Web开发中跟认证相关的流程，该案例使用Node.js托管前端页面，实现到后端服务器的路由跳转，称为UI Service；业务相关的请求放在Query Service中；认证相关的请求（比如登录、登出、更改密码、Token认证等）放在Auth Service中。</p>
+<a id="more"></a>
+<h1 id="认证相关的数据库设计"><a href="#认证相关的数据库设计" class="headerlink" title="认证相关的数据库设计"></a>认证相关的数据库设计</h1><p><img src="/2018/02/05/Web认证相关总结/./用户认证相关总结/登录相关数据库.png" alt=""></p>
+<h2 id="account表"><a href="#account表" class="headerlink" title="account表"></a>account表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">account</span></div><div class="line">(</div><div class="line">   <span class="keyword">id</span>                   <span class="built_in">char</span>(<span class="number">32</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   account_access_info_id <span class="built_in">char</span>(<span class="number">32</span>),</div><div class="line">   company_id           <span class="built_in">char</span>(<span class="number">32</span>),</div><div class="line">   firstname            <span class="built_in">varchar</span>(<span class="number">32</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   lastname             <span class="built_in">varchar</span>(<span class="number">32</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   email                <span class="built_in">varchar</span>(<span class="number">32</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   phone_number         <span class="built_in">varchar</span>(<span class="number">32</span>),</div><div class="line">   title                <span class="built_in">varchar</span>(<span class="number">32</span>),</div><div class="line">   <span class="keyword">password</span>             <span class="built_in">varchar</span>(<span class="number">200</span>),</div><div class="line">   <span class="keyword">salt</span>                 <span class="built_in">varchar</span>(<span class="number">200</span>),</div><div class="line">   reset_password_token <span class="built_in">varchar</span>(<span class="number">200</span>),</div><div class="line">   reset_password_token_expire <span class="keyword">timestamp</span>,</div><div class="line">   is_active            bool <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   last_update_time     <span class="keyword">timestamp</span>,</div><div class="line">   update_count         <span class="built_in">int</span>,</div><div class="line">   primary <span class="keyword">key</span> (<span class="keyword">id</span>)</div><div class="line">);</div></pre></td></tr></table></figure>
+<h2 id="account-access-info表"><a href="#account-access-info表" class="headerlink" title="account_access_info表"></a>account_access_info表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> account_access_info</div><div class="line">(</div><div class="line">   <span class="keyword">id</span>                   <span class="built_in">char</span>(<span class="number">32</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   account_id           <span class="built_in">char</span>(<span class="number">32</span>),</div><div class="line">   login_token          <span class="built_in">varchar</span>(<span class="number">200</span>),</div><div class="line">   login_token_expire   <span class="keyword">timestamp</span>,</div><div class="line">   attempts             <span class="built_in">int</span>,</div><div class="line">   last_attempts_time   <span class="keyword">timestamp</span>,</div><div class="line">   is_locked            bool <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">   primary <span class="keyword">key</span> (<span class="keyword">id</span>)</div><div class="line">);</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="登录认证"><a href="#登录认证" class="headerlink" title="登录认证"></a>登录认证</h1><p><img src="/2018/02/05/Web认证相关总结/./用户认证相关总结/login.png" alt=""></p>
+<h2 id="前端认证"><a href="#前端认证" class="headerlink" title="前端认证"></a>前端认证</h2><p>​    登录过程首先要前端做一遍认证，用于拦截掉普通用户输入错误的情况，比如邮箱格式，密码格式（8-15位并且必须有大小写字母和数字）</p>
+<ul>
+<li>初始状态，登录按钮处于disable状态，鼠标无法点击，即无法提交POST请求</li>
+<li>用户输入帐号，输入完毕后通过TAB键或ENTER键（利用<code>onKeyDown</code>事件监听enter按钮）切换光标到密码输入框；同时检测用户输入的帐号是否符合邮箱格式，如不符合，提示<code>Please input a valid email address</code></li>
+<li>用户输入密码，一旦用户输入了第一位密码同时邮箱格式正确，令LOGIN按钮enable。当用户输入完毕，通过点击LOGIN按钮或按下Enter（利用onKeyDown事件监听enter按钮）来提交POST请求。POST请求的格式可以做如下参考：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在发送POST请求的时候给页面填加遮罩，防止用户有其他操作</span></div><div class="line">$(<span class="string">'#page_loading'</span>).removeClass(<span class="string">'hidden'</span>);	</div><div class="line"></div><div class="line">$.ajax(&#123;</div><div class="line">      <span class="attr">url</span>: path.LOGIN,</div><div class="line">      <span class="attr">method</span>: <span class="string">'POST'</span>,</div><div class="line">      <span class="attr">dataType</span>: <span class="string">'json'</span>,</div><div class="line">      <span class="attr">contentType</span>: <span class="string">'application/json; charset=utf-8'</span>,</div><div class="line">      <span class="attr">data</span>: <span class="built_in">JSON</span>.stringify(&#123;</div><div class="line">        <span class="attr">username</span>: _state.userName,</div><div class="line">        <span class="attr">password</span>: _state.password,</div><div class="line">      &#125;),</div><div class="line">      <span class="attr">success</span>: <span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</div><div class="line">        <span class="comment">// 请求结束，去掉遮罩</span></div><div class="line">        $(<span class="string">'#page_loading'</span>).addClass(<span class="string">'hidden'</span>);</div><div class="line">        <span class="comment">// 保存token等信息</span></div><div class="line">        <span class="keyword">let</span> responseJSON;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> response === <span class="string">'string'</span>) &#123;</div><div class="line">          responseJSON = <span class="built_in">JSON</span>.parse(response);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">          responseJSON = response;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (responseJSON.token.length &gt; <span class="number">0</span>) &#123;</div><div class="line">          sessionStorage.__ecs_user_token = responseJSON.token; <span class="comment">// 保存token</span></div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 页面跳转</span></div><div class="line">        location.href = <span class="string">`<span class="subst">$&#123;path.MAIN_PAGE&#125;</span>?token=<span class="subst">$&#123;responseJSON.token&#125;</span>`</span>;</div><div class="line">      &#125;,</div><div class="line">      <span class="attr">error</span>: <span class="function"><span class="keyword">function</span>(<span class="params">jqXHR, textStatus</span>) </span>&#123;</div><div class="line">        <span class="comment">// 请求结束，去掉遮罩</span></div><div class="line">        $(<span class="string">'#page_loading'</span>).addClass(<span class="string">'hidden'</span>);</div><div class="line">        ...</div><div class="line">      &#125;</div><div class="line"> &#125;)</div></pre></td></tr></table></figure>
+<p>待登录请求成功后，前端使用<code>location.href</code>跳转到首页，请求中要携带token</p>
+<h2 id="后端的登录认证"><a href="#后端的登录认证" class="headerlink" title="后端的登录认证"></a>后端的登录认证</h2><h3 id="格式验证"><a href="#格式验证" class="headerlink" title="格式验证"></a>格式验证</h3><p>​    虽然前端已经做过一次帐号、密码的验证，但服务端必须做再次的确认，因为前端页面验证不能防范其他人恶意的尝试密码。<strong>记住：对所有到达后端的请求都要保持怀疑的态度</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (!Validators.validateEmailAddress(loginRequestModel.getUsername()) || !Validators.validatePassword(loginRequestModel.getPassword())) &#123;</div><div class="line">	logger.info(<span class="string">"/login: Invalid username or password"</span>);</div><div class="line">     map.put(<span class="string">"success"</span>, <span class="keyword">false</span>);</div><div class="line">     map.put(<span class="string">"message"</span>, <span class="string">"Invalid username or password"</span>);</div><div class="line">     <span class="keyword">return</span> <span class="keyword">new</span> ResponseEntity&lt;Map&lt;String, Object&gt;&gt;(map, HttpStatus.BAD_REQUEST);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="数据库验证"><a href="#数据库验证" class="headerlink" title="数据库验证"></a>数据库验证</h3><ul>
+<li>验证用户输入的<code>username</code>是否在account表中</li>
+<li>通过<code>id</code>查看account_access_info表中该用户帐号是否被锁住（<code>isLocked</code>字段）</li>
+<li>通过<code>PasswordUtil.checkPassword</code>工具验证密码，参数为account表中的<code>salt</code>, <code>password</code>和用户输入的密码</li>
+<li>如果输入错误，将account_access_info表中的<code>attempts</code>字段加1，并提示剩余的尝试次数；如果5次输入错误，提示账户被锁，需要联系管理员解锁密码</li>
+<li>通过<code>JwtUtil.generateToken</code>工具生成token，<code>payload</code>中的字段依业务逻辑而定，可以添加<code>iat</code>, <code>exp</code>, <code>accountType</code>等信息</li>
+<li>用户认证成功，生成http响应体，参考如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@AllArgsConstructor</span></div><div class="line"><span class="meta">@NoArgsConstructor</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@Data</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginResponseModel</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Boolean success;</div><div class="line">    <span class="keyword">private</span> String message;</div><div class="line">    <span class="keyword">private</span> String token;</div><div class="line">    <span class="keyword">private</span> String firstName;</div><div class="line">    <span class="keyword">private</span> String lastName;</div><div class="line">    <span class="keyword">private</span> String title;</div><div class="line">    <span class="keyword">private</span> String companyID;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="前端响应"><a href="#前端响应" class="headerlink" title="前端响应"></a>前端响应</h2><p>前端基于Ajax的请求结果做不同的展现：</p>
+<ul>
+<li>超时，Connection timeout. Please try again</li>
+<li>200，保存后端返回的信息，如token，用户信息等</li>
+<li>400，Invalid username or password. Please try again or use Forget Password link below.</li>
+<li>401，Invalid username or password. Please try again or use Forget Password link below.</li>
+<li>423，Your account is locked due to too many times failure.</li>
+<li>500，Server error. Please try again.</li>
+</ul>
+<p>注：登录认证过程永远不要告诉用户到底是用户名错误还是密码错误。只需要给出大概的提示：<code>Invalid username or password</code>。这可以防止攻击者在不知道密码的情况下，遍历出有效的用户名。</p>
+<hr>
+<h1 id="登出认证"><a href="#登出认证" class="headerlink" title="登出认证"></a>登出认证</h1><p>登出时前端发送一个<code>/logout</code>GET请求，只需要在http请求头的<code>x-access-token</code>中添加token，不需要额外添加用户信息，因为在token的payload中已经携带了<code>accoutID</code>信息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">headers: &#123;</div><div class="line">	<span class="string">'x-access-token'</span>: sessionStorage.token,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>后端首先要解析token，确保token未篡改， 并在有效期间内</p>
+<p>从token的payload中获取<code>accoutID</code>，并在account_access_info表中查找，如果找不到用户，则返回401<code>User attempts to logout an account with no access information in the database</code></p>
+<p>判断是移动端还是web端发送的请求，然后将相应的token删除，并返回200</p>
+<hr>
+<h1 id="忘记密码认证"><a href="#忘记密码认证" class="headerlink" title="忘记密码认证"></a>忘记密码认证</h1><p>​    在前端的登录页面有<code>Forget password</code>的按钮，当用户忘记密码，通过POST <code>/passport/forgotpassword</code>请求并携带用户名</p>
+<p><img src="/2018/02/05/Web认证相关总结/./用户认证相关总结/forgetpassword.png" alt=""></p>
+<hr>
+<p>后端首先验证用户名<code>Validators.validateEmailAddress</code>（要永远对前端的请求保持怀疑态度）</p>
+<p>从account表查找用户名，如果不存在，返回400 Invalid username</p>
+<p>生成<code>resetpasswordtoken</code>和<code>reset_password_token_expire</code>，过期时间可以设定为2小时内有效，更新数据库</p>
+<p>生成邮件，邮件内有url，用户名字等信息</p>
+<p>返回200</p>
+<hr>
+<p>用户的邮箱会收到一封邮件，提示重置密码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></div><div class="line">  You recently requested a password reset for your ECS Monitoring System account. Please click on the below link to continue resetting your password.</div><div class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"$&#123;resetpassword&#125;"</span>&gt;</span>Reset Your Password &amp;gt;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>接着会执行重置密码的认证</p>
+<hr>
+<h1 id="重置密码认证"><a href="#重置密码认证" class="headerlink" title="重置密码认证"></a>重置密码认证</h1><p><img src="/2018/02/05/Web认证相关总结/./用户认证相关总结/resetpassword.png" alt=""></p>
+<p>​    有两种情况会执行重置密码的认证：一是用户忘记密码， 执行忘记密码的认证之后，用户会收到重置密码的邮件；二是管理员在后台管理界面新增加一个用户，该用户会收到一封创建帐号的邮件。不论是上述哪种情况，在邮件中会有一个<code>/resetpassword/{token}</code>的URL，用于跳转到重置密码的界面。</p>
+<hr>
+<p>后端收到<code>/resetpassword/{token}</code>的GET请求后，验证token是否为空，否则返回400 Missing token</p>
+<p>在<code>account</code>表中查找<code>resetpasswordtoken</code>，如果没有，返回400，Invalid token。如果有，返回200</p>
+<p>UI服务器接收到Auth服务器的200响应后，将重置密码页面展示给用户：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">router.get(<span class="string">'/resetpassword/:token'</span>, (req, res) =&gt; &#123;</div><div class="line">  authenticationMiddleware.validateResetPageToken(req, res, (reqNext, resNext) =&gt; &#123;</div><div class="line">    resNext.status(<span class="number">200</span>).set(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>)</div><div class="line">      .sendFile(path.join(__dirname, <span class="string">'../public/resetpassword.html'</span>));</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<hr>
+<p>在重置密码页面，用户POST<code>/resetpassword/{token}</code>请求，请求体中携带<code>password</code>, <code>confirmPassword</code></p>
+<p>后端验证<code>token</code>, <code>password</code>, <code>confirmPassword</code>是否为空，否则返回400 <code>Missing required filed</code></p>
+<p>验证<code>password</code>, <code>confirmPassword</code>是否相等，否则返回400 <code>Password doesn&#39;t match with confirm password</code></p>
+<p>验证密码是否有效<code>Validators.validatePassword</code>，否则返回400 <code>Password must be 8-16 characters with at least one uppercase character, one lowercase character, one number and one special character</code></p>
+<p>通过<code>resetpasswordtoken</code>查account表，验证是否有有效用户，否则返回400</p>
+<p>通过account表的<code>resetPasswordTokenExpire</code>字段验证当前token是否过期（重置密码2个小时之内有效）</p>
+<p>通过<code>PasswordUtil.encryptPassword</code>通过生成<code>salt</code>和<code>hashpassword</code></p>
+<p>修改account表并保存，注：应该删除<code>resetPasswordToken</code>, <code>resetPasswordTokenExpire</code>字段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">accountEntity.setSalt(passwordEncryptionResponseModel.getSalt());</div><div class="line">accountEntity.setPassword(passwordEncryptionResponseModel.getHashPassword());</div><div class="line"><span class="comment">// resetPasswordToken and resetPasswordTokenExpire will be useless. So remove them</span></div><div class="line">accountEntity.setResetPasswordToken(<span class="keyword">null</span>);</div><div class="line">accountEntity.setResetPasswordTokenExpire(<span class="keyword">null</span>);</div><div class="line">accountEntity.setUpdateCount(accountEntity.getUpdateCount() + <span class="number">1</span>);</div><div class="line">accountEntity.setLastUpdateDateTime(now);</div><div class="line">accountRepository.save(accountEntity);</div></pre></td></tr></table></figure>
+<p>返回200，并给用户发送一封邮件通知密码已经重置成功</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Dear $&#123;firstname&#125; $&#123;lastname&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>You recently changed your password for xxx System.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>If you didn't make this password change or if you believe unauthorized person has accessed your account, please go to <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"xxx.xxx.com"</span>&gt;</span>Forgot Password<span class="tag">&lt;/<span class="name">a</span>&gt;</span> to reset your password immediately.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>
+<hr>
+<h1 id="更改密码认证"><a href="#更改密码认证" class="headerlink" title="更改密码认证"></a>更改密码认证</h1><p><img src="/2018/02/05/Web认证相关总结/./用户认证相关总结/login.png" alt=""></p>
+<ul>
+<li>验证password, confirmPassword是否相同</li>
+<li>验证currentPassword, password是否相同</li>
+<li><code>Validators.validatePassword</code>验证currentPassword, password, confirmPassword是否是有效的密码格式</li>
+<li>通过<code>JwtUtil.parseToken(token)</code>验证token，并解析出accountID</li>
+<li>使用accountID从account表中获取用户信息</li>
+<li><code>PasswordUtil.checkPassword(currentPassword, accountEntity.getSalt(), accountEntity.getPassword()))</code>，验证currentPassword是否正确</li>
+<li>确认当前密码输入正确后，使用<code>PasswordUtil.encryptPassword(password)</code>新密码生成<code>salt</code>和<code>hashPassword</code></li>
+<li>在account表中更新当前用户的信息：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">accountEntity.setSalt(passwordEncryptionResponseModel.getSalt());</div><div class="line">accountEntity.setPassword(passwordEncryptionResponseModel.getHashPassword());</div><div class="line">accountEntity.setUpdateCount(accountEntity.getUpdateCount() + <span class="number">1</span>);</div><div class="line">accountEntity.setLastUpdateDateTime(now);</div><div class="line">accountRepository.save(accountEntity);</div></pre></td></tr></table></figure>
+<ul>
+<li>请求成功，返回200</li>
+</ul>
+<hr>
+<h1 id="Token认证"><a href="#Token认证" class="headerlink" title="Token认证"></a>Token认证</h1><p>​    使用RESTful API向服务端发送请求的时候，需要对请求资源的用户进行身份认证。具体实现为：</p>
+<p>用户发起的请求的请求先经过基于Node.js的ui-service，然后先路由到<code>/passport/verifymobiletoken</code>接口进行token验证</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">router.get(<span class="string">'/reports'</span>, (req, res) =&gt; &#123;</div><div class="line">  authenticationMiddleware.validateCommonAccessToken(req, res, (reqNext, resNext, body) =&gt; &#123;</div><div class="line">    forwardMiddleware.forwardQueryRequest(config.server.query, reqNext, resNext, body);</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>认证服务器首先对token进行验证和解析，获取payload中的accountID</p>
+<p>在account表中查找是否用户存在</p>
+<p>在其他表中查找跟用户有关的信息（该信息是RESTful请求需要的信息）</p>
+<p>返回200</p>
+<p>ui-service接受到auth服务器的200响应后，将请求转发到query服务器。否则认证失败，将页面定向到登录页面</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (token) &#123;</div><div class="line">    <span class="keyword">const</span> postOpts = &#123;</div><div class="line">      <span class="attr">url</span>: isMobile ? config.servicePath.verifymobiletoken : config.servicePath.verifywebtoken,</div><div class="line">      <span class="attr">method</span>: <span class="string">'POST'</span>,</div><div class="line">      <span class="attr">rejectUnauthorized</span>: <span class="literal">false</span>,</div><div class="line">      <span class="attr">headers</span>: &#123; <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span> &#125;,</div><div class="line">      <span class="attr">json</span>: &#123; token &#125;,</div><div class="line">    &#125;;</div><div class="line">    request.post(postOpts, (err, httpResponse, body) =&gt; &#123;</div><div class="line">      ...</div><div class="line">      return next(req, res, body);</div><div class="line">    &#125;);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> res.redirect(<span class="string">'/passport/login'</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="Web端和IOS端的认证"><a href="#Web端和IOS端的认证" class="headerlink" title="Web端和IOS端的认证"></a>Web端和IOS端的认证</h1><p>​    由于IOS和Web分别使用各自的token进行认证， 而两者在认证的业务逻辑上没有任何区别，因此可以在公用一套代码逻辑，以Token认证过程为例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@PostMapping</span>(value = &#123;<span class="string">"/verifywebtoken"</span>,<span class="string">"/verifymobiletoken"</span>&#125;)</div><div class="line">    <span class="keyword">public</span> ResponseEntity&lt;Map&lt;String,Object&gt;&gt; handleVerifyToken(</div><div class="line">            HttpServletRequest httpRequest,</div><div class="line">            <span class="meta">@RequestBody</span> TokenRequestModel tokenRequestModel) <span class="keyword">throws</span> FileNotFoundException&#123;</div><div class="line">	<span class="comment">// distinguish request from web portal or mobile app</span></div><div class="line">   	<span class="keyword">final</span> String requestMapping = (String) httpRequest.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);</div><div class="line">	<span class="keyword">final</span> <span class="keyword">boolean</span> isMobile = requestMapping.contains(<span class="string">"/verifymobiletoken"</span>);</div><div class="line"> </div><div class="line">      ...</div><div class="line">        </div><div class="line">	<span class="keyword">return</span> authenticationService.handleVerifyToken(token,isMobile); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/06/Web应用如何保护用户密码/" rel="next" title="Web应用如何保护用户密码">
+                <i class="fa fa-chevron-left"></i> Web应用如何保护用户密码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/14/RESTful架构和RESTful API设计总结/" rel="prev" title="RESTful架构和RESTful API设计总结">
+                RESTful架构和RESTful API设计总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Zhichao" />
+          <p class="site-author-name" itemprop="name">Zhichao</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yaeljiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#认证相关的数据库设计"><span class="nav-number">1.</span> <span class="nav-text">认证相关的数据库设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#account表"><span class="nav-number">1.1.</span> <span class="nav-text">account表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#account-access-info表"><span class="nav-number">1.2.</span> <span class="nav-text">account_access_info表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#登录认证"><span class="nav-number">2.</span> <span class="nav-text">登录认证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前端认证"><span class="nav-number">2.1.</span> <span class="nav-text">前端认证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后端的登录认证"><span class="nav-number">2.2.</span> <span class="nav-text">后端的登录认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#格式验证"><span class="nav-number">2.2.1.</span> <span class="nav-text">格式验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库验证"><span class="nav-number">2.2.2.</span> <span class="nav-text">数据库验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端响应"><span class="nav-number">2.3.</span> <span class="nav-text">前端响应</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#登出认证"><span class="nav-number">3.</span> <span class="nav-text">登出认证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#忘记密码认证"><span class="nav-number">4.</span> <span class="nav-text">忘记密码认证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重置密码认证"><span class="nav-number">5.</span> <span class="nav-text">重置密码认证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更改密码认证"><span class="nav-number">6.</span> <span class="nav-text">更改密码认证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Token认证"><span class="nav-number">7.</span> <span class="nav-text">Token认证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web端和IOS端的认证"><span class="nav-number">8.</span> <span class="nav-text">Web端和IOS端的认证</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhichao</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Zhichao.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/02/05/Web认证相关总结/';
+          this.page.identifier = '2018/02/05/Web认证相关总结/';
+          this.page.title = 'Web认证相关总结';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Zhichao.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

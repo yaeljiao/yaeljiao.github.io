@@ -1,0 +1,863 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="后端," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="常用的认证机制 Cookie/Session Auth：在服务端创建一个Session对象，同时在客户端的浏览器端创建一个Cookie对象；通过客户端发来的请求中携带的Cookie对象与服务器端的session对象进行匹配，来实现认证 OAuth (Open Authorization, 开放授权) Token Auth：基于JWT的Token认证机制实现">
+<meta name="keywords" content="后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web应用中使用JWT保护RESTful API">
+<meta property="og:url" content="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful API/index.html">
+<meta property="og:site_name" content="Zhichao">
+<meta property="og:description" content="常用的认证机制 Cookie/Session Auth：在服务端创建一个Session对象，同时在客户端的浏览器端创建一个Cookie对象；通过客户端发来的请求中携带的Cookie对象与服务器端的session对象进行匹配，来实现认证 OAuth (Open Authorization, 开放授权) Token Auth：基于JWT的Token认证机制实现">
+<meta property="og:image" content="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful%20API/Web安全之使用JWT保护RESTful%20API/2018-02-06_162153.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful%20API/Web安全之使用JWT保护RESTful%20API/2018-02-06_162138.png">
+<meta property="og:updated_time" content="2018-02-09T06:21:13.020Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web应用中使用JWT保护RESTful API">
+<meta name="twitter:description" content="常用的认证机制 Cookie/Session Auth：在服务端创建一个Session对象，同时在客户端的浏览器端创建一个Cookie对象；通过客户端发来的请求中携带的Cookie对象与服务器端的session对象进行匹配，来实现认证 OAuth (Open Authorization, 开放授权) Token Auth：基于JWT的Token认证机制实现">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful%20API/Web安全之使用JWT保护RESTful%20API/2018-02-06_162153.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful API/"/>
+
+
+
+
+
+  <title> Web应用中使用JWT保护RESTful API | Zhichao </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhichao</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhichao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhichao">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Web应用中使用JWT保护RESTful API
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T16:11:51+08:00">
+                2018-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/06/Web应用中使用JWT保护RESTful API/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/02/06/Web应用中使用JWT保护RESTful API/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="常用的认证机制"><a href="#常用的认证机制" class="headerlink" title="常用的认证机制"></a>常用的认证机制</h2><ul>
+<li>Cookie/Session Auth：在服务端创建一个Session对象，同时在客户端的浏览器端创建一个Cookie对象；通过客户端发来的请求中携带的Cookie对象与服务器端的session对象进行匹配，来实现认证</li>
+<li>OAuth (Open Authorization, 开放授权)</li>
+<li>Token Auth：基于JWT的Token认证机制实现</li>
+</ul>
+<a id="more"></a>
+<p>​    JWT(JSON Web Token)是一个规范，一般被用来在客户端和服务端之间传递被认证的用户身份信息，以便于从资源服务器获取资源。比如向服务端发送RESTful请求，更改用户密码，登出操作等。JWT也更适用于移动互联网时代： 当客户端是一个移动平台(iOS, Android)时，Cookie是不被支持的（需要通过Cookie容器进行处理），这时采用Token认证机制就会简单得多</p>
+<p>JWT相比于Session的优点:</p>
+<ul>
+<li>不占用服务器内存开销：session需要保存在服务器，因此会占用服务器内存开销（尽管JWT会让服务器有一些计算压力，比如token的签名和验证）</li>
+<li>可扩展性强: 比如有3台机器（A、B、C）组成服务器集群，若session存在机器A上，session只能保存在其中一台服务器，此时你便不能访问机器B、C，因为B、C上没有存放该Session，而使用token就能够验证用户请求合法性，并且我再加几台机器也没事，所以可拓展性好就是这个意思。</li>
+<li>前后端分离，支持跨域访问</li>
+</ul>
+<p>JWT的缺点：</p>
+<ul>
+<li>token中不能保存私密信息：Head和Payload使用base64进行编码</li>
+</ul>
+<ul>
+<li>无法作废已颁布的token：由于所有的认证信息都在JWT中，如过某个JWT被盗取了，是没有办法在服务端将其作废（自己放出去的token，含着泪也要认证到底）</li>
+</ul>
+<hr>
+<h2 id="JWT构成"><a href="#JWT构成" class="headerlink" title="JWT构成"></a>JWT构成</h2><p>​    JWT由三段组成，分别是header（头部）、payload（负载）和signature（签名）。</p>
+<h3 id="Header-头部"><a href="#Header-头部" class="headerlink" title="Header 头部"></a>Header 头部</h3><p>​    头部描述该JWT的最基本信息，包含两个字段：一个是签名算法，比如HS256(HMAC with SHA-256), RS256(RSA signature with SHA-256)；另一个是token类型（基于RFC 7519实现的token机制并不只JWT一种）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"typ"</span>: <span class="string">"JWT"</span>,</div><div class="line">  <span class="attr">"alg"</span>: <span class="string">"HS256"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注：</p>
+<ul>
+<li>头部中的信息都用缩写的三个字符，这是由于JWT的目标就是尽可能小巧</li>
+<li>如果我们采用的是JWT的话，<code>typ</code>字段可以忽略不写</li>
+</ul>
+<h3 id="Payload-负载"><a href="#Payload-负载" class="headerlink" title="Payload 负载"></a>Payload 负载</h3><p>​    负载放三种字段：系统保留的声明(Registered Claim Names)，公共声明(Public Claim Names)和私有声明(Private Claim Names)。</p>
+<ul>
+<li>系统保留的声明：这类声明不是必须的，但是建议使用，包括iss (签发者), exp (过期时间), sub (主题), aud (目标受众)等</li>
+<li>私有声明：按照具体的业务需要而定</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    "iat": 1441593502,			// issued At签发时间</div><div class="line">    "exp": 1441594722,			// Expiration Time，过期时间</div><div class="line">    "iss": "John Wu JWT",		 // Issuer，该JWT的签发者</div><div class="line">    "aud": "www.example.com",	 // Audience，该JWT的接收者</div><div class="line">    "sub": "jrocket@example.com" // Subject，</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​    注：<strong>使用token会暴露信</strong>息，因为头部和负载使用Base64进行编码，任何人都可以通过base64解码来获取的信息，因此payload中不应该出现私密信息，比如密码。</p>
+<h3 id="Signature-签名"><a href="#Signature-签名" class="headerlink" title="Signature 签名"></a>Signature 签名</h3><p>​    将header和payload进行base64编码，然后通过<code>header.payload</code>形式组成在一起，就形成如下的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50dHlwZSI6MSwiZXhwIjoxNTAyMjgwNzY4LCJpYXQiOjE1MDIxOTQzNjgsInN1YiI6IjU5MzdlM2U1YmM0ZmQ2NmYzOTljNGMyMCJ9</div></pre></td></tr></table></figure>
+<p>​    签名的过程就是使用base64编码后的 header 和 payload 以及后端中保存的一个密钥，使用 header 中指定的签名算法进行签名。服务器收到JWT后，用同样的算法和密钥对header和payload进验证。</p>
+<p>​    签名过后，将base64编码过后的header和payload以及signature拼接在一起，就组成了完整的JWT，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50dHlwZSI6MSwiZXhwIjoxNTAyMjgwNzY4LCJpYXQiOjE1MDIxOTQzNjgsInN1YiI6IjU5MzdlM2U1YmM0ZmQ2NmYzOTljNGMyMCJ9.wEY7c2uKMtk0Fyu2t5RKhEqViJcRV2cu22VyxGy9aRGC3IrFmfqFSGnhvYA5BqflZku0Fug4UJciVBZDB1Q2Ot-TP7-gC-Mve0cWAgHazWNkWXt5taJqtOrxRvHJbQuXCnHKn-syM9Iq5Jlja0GBu6WQ5PteBW7Ztv_OhDly2_4</div></pre></td></tr></table></figure>
+<p>​    签名的目的：<strong>保证 JWT 没有被篡改过。</strong>使用加密算法能够保证不同的输入产生的输出总是不一样的，如果有人恶意篡改了头部或负载中的信息，通过相同的密钥进行加密得到的签名肯定不再相同，此时即可证明token是无效的。</p>
+<h3 id="JWT例子"><a href="#JWT例子" class="headerlink" title="JWT例子"></a>JWT例子</h3><p>​    <a href="https://jwt.io/" target="_blank" rel="external">JWT的官网</a>首页给出了非常适合入门的例子，分别提供了HS256和RS256算法的测试。RS256 (RSA Signature with SHA-256)是一种非对称加密算法，HS256 (HMAC with SHA-256)是一种对称加密算法。</p>
+<p><img src="/2018/02/06/Web应用中使用JWT保护RESTful API/./Web安全之使用JWT保护RESTful API/2018-02-06_162153.png" alt=""></p>
+<p><img src="/2018/02/06/Web应用中使用JWT保护RESTful API/./Web安全之使用JWT保护RESTful API/2018-02-06_162138.png" alt=""></p>
+<hr>
+<h2 id="JWT的认证过程"><a href="#JWT的认证过程" class="headerlink" title="JWT的认证过程"></a>JWT的认证过程</h2><ol>
+<li>用户在登录页面，使用POST请求发送用户名、密码给后端进行登录</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    username: "yaeljiao@gmail.com",</div><div class="line">    password: "123qweASD"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>服务器对用户进行鉴权（鉴权过程可以参见：<a href="">Web安全之如何保护密码</a>)，验证通过后生成相应的header和payload，然后使用密钥生成token</li>
+</ol>
+<ol>
+<li><p>将JWT返回给前端</p>
+<p>返回的方式有两种，可以根据具体的业务而定。一种是使用Cookie保存JWT：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Set-Cookie: jwt=xxx.xxx.xxx;</div></pre></td></tr></table></figure>
+<p>​    另一种是将JWT保存在Session Storage中，这种情况下可以将JWT直接在body中返回，然后前端通过<code>sessionStorage</code>对象来保存和取出token：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"> <span class="string">"success"</span>:<span class="keyword">true</span>,</div><div class="line"> <span class="string">"message"</span>:<span class="string">""</span>,</div><div class="line"> <span class="string">"token"</span>:<span class="string">"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50dHlwZSI6MSwiZXhwIjoxNDk4NTMyNzU5LCJpYXQiOjE0OTg0NDYzNTksInN1YiI6IjU5NDlmNTVhYmFkYThhMjQyMDc2YjgyZCJ9.VhCmcdtBa2IxFrFDH8Nclx8yByeFxQP3LPjOIux1-eZma-vQsHjRXjF_0l3MySh9JPB1cSNvlnBhgOSfjTspuu28vVu6KGpZ3iqMhg-AIRjcoXCbuXkBqkNExmasF7DiMMzcwakslv_hcj-tg16LmnlIY8VAwseuc2AZ4_fHGpc"</span>,</div><div class="line"> <span class="string">"firstName"</span>:<span class="string">"Chris"</span>,</div><div class="line"> <span class="string">"lastName"</span>:<span class="string">"Jiang"</span>,</div><div class="line"> <span class="string">"title"</span>:<span class="string">"SW"</span>,</div><div class="line"> <span class="string">"companyID"</span>:<span class="string">"5775d1702853773840f2cccf"</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>在jwt有效期间内，每次发送请求给服务端都会携带token。根据第三步中保存token的方式不同，发送token的方式也有两种，第一种在cookie中携带token，另一种是在http的请求头中携带token信息：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">headers: &#123;</div><div class="line">	<span class="string">'x-access-token'</span>: sessionStorage.token,</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<ol>
+<li>服务端获取到token后，对jwt进行一系列的有效性检查，检查项有：签名是否正确、token是否过期等</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// jjwt的parseClaimsJws()方法可以完成token检查操作</span></div><div class="line">Claims claims = Jwts.parser()</div><div class="line">            .setSigningKey(key.getBytes())</div><div class="line">            .parseClaimsJws(token)</div><div class="line">            .getBody();</div></pre></td></tr></table></figure>
+<ol>
+<li>从token中获取需要的信息，比如用户的id</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">TokenDecodeEntity tokenDecodeEntity = <span class="keyword">new</span> TokenDecodeEntity();</div><div class="line">        tokenDecodeEntity.setIat(claims.getIssuedAt());</div><div class="line">        tokenDecodeEntity.setExp(claims.getExpiration());</div><div class="line">        tokenDecodeEntity.setAccountID(claims.getAudience());</div><div class="line">        tokenDecodeEntity.setAccountType((Integer) claims.get(<span class="string">"accountType"</span>));</div></pre></td></tr></table></figure>
+<ol>
+<li>根据从token中获取的用户信息，进而在数据库中获取具体的业务信息</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AccountInfoEntity accountInfoEntity = accountInfoRepository.findByAccountID(</div><div class="line">  tokenDecodeEntity.getAccountID());</div></pre></td></tr></table></figure>
+<ol>
+<li>最后后端根据应用的具体请求做出响应</li>
+</ol>
+<hr>
+<h2 id="JWT认证的安全问题"><a href="#JWT认证的安全问题" class="headerlink" title="JWT认证的安全问题"></a>JWT认证的安全问题</h2><h3 id="确保验证过程的安全性"><a href="#确保验证过程的安全性" class="headerlink" title="确保验证过程的安全性"></a>确保验证过程的安全性</h3><p>​    由于在登录验证过程中需要用户输入帐户和密码，在这一过程中，用户名、密码等敏感信息需要在网络中传输。因此，所有的请求应采用HTTPS，通过SSL加密传输，以确保通道的安全性。</p>
+<h3 id="防范重放攻击-Replay-Attacks"><a href="#防范重放攻击-Replay-Attacks" class="headerlink" title="防范重放攻击(Replay Attacks)"></a>防范重放攻击(Replay Attacks)</h3><p>​    如果客户的token被盗取，此时黑客使用盗取的token模拟正常的请求，而服务器对比是毫无办法的。服务端唯一能做的是在限制token的过期时间。避免一个token被无限期的使用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (timeToAlive &gt; <span class="number">0</span>) &#123;</div><div class="line">     iat = <span class="keyword">new</span> Date(System.currentTimeMillis());</div><div class="line">	exp = <span class="keyword">new</span> Date(System.currentTimeMillis() + timeToAlive);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">     <span class="keyword">throw</span> <span class="keyword">new</span> InputIsInvalidException(<span class="string">"Token's alive time should be positive"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">JwtBuilder jwtBuilder = Jwts.builder()</div><div class="line">	.claim(<span class="string">"iat"</span>, iat)</div><div class="line">     .claim(<span class="string">"aud"</span>, tokenPayloadEntity.getAccountID())</div><div class="line">     .claim(<span class="string">"accountType"</span>, tokenPayloadEntity.getAccountType());</div><div class="line">jwtBuilder.setExpiration(exp);</div><div class="line">jwtBuilder.signWith(SignatureAlgorithm.HS256, key.getBytes());</div><div class="line"></div><div class="line"><span class="keyword">return</span> jwtBuilder.compact();</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="Token在前端如何保存"><a href="#Token在前端如何保存" class="headerlink" title="Token在前端如何保存"></a>Token在前端如何保存</h2><p>Token在前端有两种保存方式：Cookies和HTML5的Web Storage。具体可以参考：<a href="https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage" target="_blank" rel="external">Where to Store your JWTs – Cookies vs HTML5 Web Storage</a>.</p>
+<h3 id="HTML5-Web-Storage-localStorage或sessionStorage"><a href="#HTML5-Web-Storage-localStorage或sessionStorage" class="headerlink" title="HTML5 Web Storage(localStorage或sessionStorage)"></a>HTML5 Web Storage(localStorage或sessionStorage)</h3><h3 id="Cookie-Storage"><a href="#Cookie-Storage" class="headerlink" title="Cookie Storage"></a>Cookie Storage</h3><hr>
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>使用JWT实现SSO</p>
+<p>跟Spring Security的结合，实现用户的权限验证</p>
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>JWT的认证过程参考：<a href="http://blog.leapoahead.com/2015/09/07/user-authentication-with-jwt/" target="_blank" rel="external">八幅漫画理解使用JSON Web Token设计单点登录系统</a></p>
+<p><a href="https://www.jianshu.com/p/6307c89fe3fa" target="_blank" rel="external">重拾后端之Spring Boot（四）：使用JWT和Spring Security保护REST API</a></p>
+<p><a href="http://www.jb51.net/article/133832.htm" target="_blank" rel="external">详解SpringCloud服务认证（JWT）</a></p>
+<p><a href="http://www.cnblogs.com/xiekeli/p/5607107.html" target="_blank" rel="external">基于Token的WEB后台认证机制</a></p>
+<p><a href="https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage" target="_blank" rel="external">Where to Store your JWTs – Cookies vs HTML5 Web Storage</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/06/Web应用如何保护用户密码/" rel="prev" title="Web应用如何保护用户密码">
+                Web应用如何保护用户密码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Zhichao" />
+          <p class="site-author-name" itemprop="name">Zhichao</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yaeljiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的认证机制"><span class="nav-number">1.</span> <span class="nav-text">常用的认证机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JWT构成"><span class="nav-number">2.</span> <span class="nav-text">JWT构成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Header-头部"><span class="nav-number">2.1.</span> <span class="nav-text">Header 头部</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Payload-负载"><span class="nav-number">2.2.</span> <span class="nav-text">Payload 负载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Signature-签名"><span class="nav-number">2.3.</span> <span class="nav-text">Signature 签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JWT例子"><span class="nav-number">2.4.</span> <span class="nav-text">JWT例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JWT的认证过程"><span class="nav-number">3.</span> <span class="nav-text">JWT的认证过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JWT认证的安全问题"><span class="nav-number">4.</span> <span class="nav-text">JWT认证的安全问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#确保验证过程的安全性"><span class="nav-number">4.1.</span> <span class="nav-text">确保验证过程的安全性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#防范重放攻击-Replay-Attacks"><span class="nav-number">4.2.</span> <span class="nav-text">防范重放攻击(Replay Attacks)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Token在前端如何保存"><span class="nav-number">5.</span> <span class="nav-text">Token在前端如何保存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML5-Web-Storage-localStorage或sessionStorage"><span class="nav-number">5.1.</span> <span class="nav-text">HTML5 Web Storage(localStorage或sessionStorage)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie-Storage"><span class="nav-number">5.2.</span> <span class="nav-text">Cookie Storage</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">6.</span> <span class="nav-text">TODO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhichao</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Zhichao.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/02/06/Web应用中使用JWT保护RESTful API/';
+          this.page.identifier = '2018/02/06/Web应用中使用JWT保护RESTful API/';
+          this.page.title = 'Web应用中使用JWT保护RESTful API';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Zhichao.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
